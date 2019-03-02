@@ -1,0 +1,1079 @@
+{
+    "adaptive_n_back.EZ_drift": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "adaptive_n_back.EZ_non_decision": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "adaptive_n_back.EZ_thresh": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "adaptive_n_back.mean_load": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "angling_risk_task_always_sunny.keep_loss_percent": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "risk_taking"
+        ]
+    },
+    "angling_risk_task_always_sunny.keep_score": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "angling_risk_task_always_sunny.release_loss_percent": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "risk_taking"
+        ]
+    },
+    "angling_risk_task_always_sunny.release_score": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "attention_network_task.EZ_drift_neutral": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "attention_network_task.EZ_non_decision_neutral": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "attention_network_task.EZ_thresh_neutral": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "attention_network_task.conflict_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "attention_network_task.conflict_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "attention_network_task.conflict_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "choice_reaction_time.EZ_drift": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "choice_reaction_time.EZ_non_decision": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "choice_reaction_time.EZ_thresh": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "columbia_card_task_cold.avg_cards_chosen": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "risk_taking"
+        ]
+    },
+    "columbia_card_task_cold.gain_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "columbia_card_task_cold.information_use": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "information_use"
+        ]
+    },
+    "columbia_card_task_cold.loss_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "columbia_card_task_cold.probability_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "columbia_card_task_hot.avg_cards_chosen": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "risk_taking"
+        ]
+    },
+    "columbia_card_task_hot.gain_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "columbia_card_task_hot.information_use": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "information_use"
+        ]
+    },
+    "columbia_card_task_hot.loss_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "columbia_card_task_hot.probability_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "dietary_decision.health_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "dietary_decision.taste_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "digit_span.forward_span": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "digit_span.reverse_span": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "directed_forgetting.EZ_drift_pos": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "directed_forgetting.EZ_non_decision_pos": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "directed_forgetting.EZ_thresh_pos": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "directed_forgetting.proactive_interference_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "resisting_proactive_interference"
+        ]
+    },
+    "directed_forgetting.proactive_interference_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "resisting_proactive_interference"
+        ]
+    },
+    "directed_forgetting.proactive_interference_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "resisting_proactive_interference"
+        ]
+    },
+    "discount_titrate.percent_patient": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "delay_discounting"
+        ]
+    },
+    "dot_pattern_expectancy.AY.BY_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "proactive_control"
+        ]
+    },
+    "dot_pattern_expectancy.AY.BY_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "proactive_control"
+        ]
+    },
+    "dot_pattern_expectancy.AY.BY_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "proactive_control"
+        ]
+    },
+    "dot_pattern_expectancy.BX.BY_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "reactive_control"
+        ]
+    },
+    "dot_pattern_expectancy.BX.BY_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "reactive_control"
+        ]
+    },
+    "dot_pattern_expectancy.BX.BY_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "reactive_control"
+        ]
+    },
+    "dot_pattern_expectancy.EZ_drift_AX": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "dot_pattern_expectancy.EZ_non_decision_AY": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "dot_pattern_expectancy.EZ_thresh_AX": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "dot_pattern_expectancy.dprime": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "go_nogo.dprime": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "inhibition"
+        ]
+    },
+    "hierarchical_rule.score": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "information_sampling_task.Decreasing_Win_P_correct": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "information_sampling_task.Decreasing_Win_boxes_opened": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "information_use"
+        ]
+    },
+    "information_sampling_task.Decreasing_Win_motivation": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "speed"
+        ]
+    },
+    "information_sampling_task.Fixed_Win_P_correct": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "information_sampling_task.Fixed_Win_boxes_opened": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "information_use"
+        ]
+    },
+    "information_sampling_task.Fixed_Win_motivation": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "speed"
+        ]
+    },
+    "keep_track.score": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "updating"
+        ]
+    },
+    "kirby.percent_patient": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "delay_discounting"
+        ]
+    },
+    "local_global_letter.EZ_drift_neutral": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "local_global_letter.EZ_non_decision_neutral": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "local_global_letter.EZ_thresh_neutral": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "local_global_letter.conflict_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "local_global_letter.conflict_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "local_global_letter.conflict_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "local_global_letter.switch_cost_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "local_global_letter.switch_cost_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "local_global_letter.switch_cost_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "motor_selective_stop_signal.EZ_drift": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "motor_selective_stop_signal.EZ_non_decision": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "motor_selective_stop_signal.EZ_thresh": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "motor_selective_stop_signal.SSRT": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "inhibition",
+            "selective_attention"
+        ]
+    },
+    "motor_selective_stop_signal.reactive_control": {
+        "diff": true,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "reactive_control"
+        ]
+    },
+    "motor_selective_stop_signal.selective_proactive_control": {
+        "diff": true,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "proactive_control"
+        ]
+    },
+    "probabilistic_selection.positive_learning_bias": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "probabilistic_selection.reg_positive_learning_bias": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "probabilistic_selection.reg_value_sensitivity": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "psychological_refractory_period_two_choices.PRP_slope": {
+        "diff": false,
+        "drift": "",
+        "oneoff": true,
+        "process": [
+            "response_selection",
+            "bottleneck"
+        ]
+    },
+    "psychological_refractory_period_two_choices.PRP_slowing": {
+        "diff": true,
+        "drift": "",
+        "oneoff": true,
+        "process": [
+            "response_selection",
+            "bottleneck"
+        ]
+    },
+    "ravens.score": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "intelligence"
+        ]
+    },
+    "recent_probes.EZ_drift_xrec": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "recent_probes.EZ_non_decision_xrec": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "recent_probes.EZ_thresh_xrec": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "recent_probes.proactive_interference_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "resisting_proactive_interference"
+        ]
+    },
+    "recent_probes.proactive_interference_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "resisting_proactive_interference"
+        ]
+    },
+    "recent_probes.proactive_interference_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "working_memory",
+            "resisting_proactive_interference"
+        ]
+    },
+    "shift_task.learning_rate": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "simon.EZ_drift_congruent": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "simon.EZ_non_decision_congruent": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "simon.EZ_thresh_congruent": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "simon.simon_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "simon.simon_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "simon.simon_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "spatial_span.forward_span": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "spatial_span.reverse_span": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "working_memory"
+        ]
+    },
+    "stim_selective_stop_signal.EZ_drift": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "stim_selective_stop_signal.EZ_non_decision": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "stim_selective_stop_signal.EZ_thresh": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "stim_selective_stop_signal.SSRT": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "inhibition",
+            "selective_attention"
+        ]
+    },
+    "stop_signal.EZ_drift": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "stop_signal.EZ_non_decision": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "stop_signal.EZ_thresh": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "proactive_control"
+        ]
+    },
+    "stop_signal.SSRT_high": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "inhibition"
+        ]
+    },
+    "stop_signal.SSRT_low": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "inhibition"
+        ]
+    },
+    "stop_signal.proactive_SSRT_speeding": {
+        "diff": true,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "proactive_control"
+        ]
+    },
+    "stop_signal.proactive_slowing": {
+        "diff": true,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "proactive_control"
+        ]
+    },
+    "stroop.EZ_drift_congruent": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "stroop.EZ_non_decision_congruent": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "stroop.EZ_thresh_congruent": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "response_selection",
+            "selective_attention"
+        ]
+    },
+    "stroop.stroop_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "stroop.stroop_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "stroop.stroop_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_conflict"
+        ]
+    },
+    "threebytwo.EZ_drift_cue_stay": {
+        "diff": false,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "threebytwo.EZ_non_decision_cue_stay": {
+        "diff": false,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "threebytwo.EZ_thresh_cue_stay": {
+        "diff": false,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "response_selection"
+        ]
+    },
+    "threebytwo.cue_switch_cost_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": true,
+        "process": [
+            "cue_encoding"
+        ]
+    },
+    "threebytwo.cue_switch_cost_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": true,
+        "process": [
+            "cue_encoding"
+        ]
+    },
+    "threebytwo.cue_switch_cost_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": true,
+        "process": [
+            "cue_encoding"
+        ]
+    },
+    "threebytwo.task_inhibition": {
+        "diff": true,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "inhibition"
+        ]
+    },
+    "threebytwo.task_switch_cost_EZ_drift": {
+        "diff": true,
+        "drift": "drift",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "threebytwo.task_switch_cost_EZ_non_decision": {
+        "diff": true,
+        "drift": "nd",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "threebytwo.task_switch_cost_EZ_thresh": {
+        "diff": true,
+        "drift": "thresh",
+        "oneoff": false,
+        "process": [
+            "set_shifting"
+        ]
+    },
+    "tower_of_london.avg_move_time": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "speed"
+        ]
+    },
+    "tower_of_london.num_correct": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "intelligence"
+        ]
+    },
+    "tower_of_london.num_optimal_solutions": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "intelligence"
+        ]
+    },
+    "tower_of_london.planning_time": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "speed"
+        ]
+    },
+    "tower_of_london.total_moves": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "speed"
+        ]
+    },
+    "two_stage_decision.model_based": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "two_stage_decision.model_free": {
+        "diff": false,
+        "drift": "",
+        "oneoff": false,
+        "process": [
+            "learning"
+        ]
+    },
+    "writing_task.neutral_probability": {
+        "diff": false,
+        "drift": "",
+        "oneoff": true,
+        "process": [
+            "neutral_writing"
+        ]
+    },
+    "writing_task.positive_probability": {
+        "diff": false,
+        "drift": "",
+        "oneoff": true,
+        "process": [
+            "positive_writing"
+        ]
+    }
+}

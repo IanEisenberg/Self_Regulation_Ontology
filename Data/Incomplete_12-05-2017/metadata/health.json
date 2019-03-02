@@ -1,0 +1,215 @@
+{
+    "DaysHalfLastMonth": {
+        "Description": "Q4: Not counting the days you reported in response to Q3, how many days in the past\n30 were you able to do only half or less of what you would normally have been able\nto do, because of these feelings?<br><br><strong>(Number of Days)</strong>",
+        "Levels": {}
+    },
+    "DaysLostLastMonth": {
+        "Description": "Q3: During the past 30 days, how many days out of 30 were you totally unable to work or\ncarry out your normal activities because of these feelings?<br><br><strong>(Number of Days)</strong>",
+        "Levels": {}
+    },
+    "DaysPhysicalHealthFeelings": {
+        "Description": "Q6: During the past 30 days, how often\nhave physical health problems been\nthe main cause of these feelings? ",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    },
+    "Depressed": {
+        "Description": "… so depressed that nothing could cheer you up?",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    },
+    "DiseaseDiagnoses": {
+        "Description": "Do you have or have you ever been diagnosed with any of the following medical conditions (check all that apply)?",
+        "Levels": {
+            "0": "Type II diabetes",
+            "1": " Metabolic Syndrome",
+            "2": " High Blood Pressure",
+            "3": " Heart Disease",
+            "4": " Stroke",
+            "5": " Cancer",
+            "6": " Sleep Apnea",
+            "7": " Other",
+            "8": " None"
+        },
+        "Nominal": true
+    },
+    "DiseaseDiagnosesOther": {
+        "Description": "If you responded “other” to the above question, please describe:",
+        "Levels": {},
+        "Nominal": true
+    },
+    "DoctorVisitsLastMonth": {
+        "Description": "Q5: During the past 30 days, how many times did you see a doctor or other health\nprofessional about these feelings?<br><br><strong>(Number of Times)</strong>",
+        "Levels": {}
+    },
+    "EverythingIsEffort": {
+        "Description": "… that everything was an effort?",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    },
+    "Hopeless": {
+        "Description": "… hopeless?",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    },
+    "Last30DaysUsual": {
+        "Description": "Q2: The last six questions asked about feelings that might have occurred during the past 30\ndays. Taking them altogether, did these feelings occur more often in the past 30 days\nthan is usual for you, about the same as usual, or less often than usual? (If you never\nhave any of these feelings, select “about the same as usual”) ",
+        "Levels": {
+            "0": " A lot",
+            "1": " Some<br><strong>Less often than usual<br>→</strong>",
+            "2": " A little ",
+            "3": " About the same as usual",
+            "4": " A little",
+            "5": " Some<br><strong>More often than usual<br>←</strong>",
+            "6": "A lot"
+        },
+        "LevelsOrig": {
+            "1": "A lot",
+            "2": " Some<br><strong>More often than usual<br>←</strong>",
+            "3": " A little",
+            "4": " About the same as usual",
+            "5": " A little ",
+            "6": " Some<br><strong>Less often than usual<br>→</strong>",
+            "7": " A lot"
+        }
+    },
+    "MeasurementToolMetadata": {
+        "Description": "Health",
+        "TermURL": ""
+    },
+    "Nervous": {
+        "Description": "… nervous?",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    },
+    "NeurologicalDiagnoses": {
+        "Description": "Have you been diagnosed with any neurological disorder (e.g. Alzheimer's, Parkinson's)?",
+        "Levels": {
+            " 0": " No",
+            "1": "Yes"
+        }
+    },
+    "NeurologicalDiagnosesDescribe": {
+        "Description": "If you responded “yes” to the above question, please describe:",
+        "Levels": {},
+        "Nominal": true
+    },
+    "PsychDiagnoses": {
+        "Description": "Do you have or have you ever been diagnosed with any of the following psychological disorders (check all that apply)?",
+        "Levels": {
+            "0": "ADHD",
+            "1": " Alcohol Dependency",
+            "2": " Anorexi Nervosa",
+            "3": " Anxiety Disorder",
+            "4": " Autism/Autism Specturm Disorder",
+            "5": " Borderline Personality Disorder",
+            "6": " Bulimia",
+            "7": " Drug Dependency",
+            "8": " Depression",
+            "9": " Manic-Depressive (Bilpolar) illness",
+            "10": " Obessive Compulsive Disorder",
+            "11": " Schizophrenia",
+            "12": " Other",
+            "13": " None"
+        },
+        "Nominal": true
+    },
+    "PsychDiagnosesOther": {
+        "Description": "If you responded “other” to the above question, please describe:",
+        "Levels": {},
+        "Nominal": true
+    },
+    "RestlessFidgety": {
+        "Description": "… restless or fidgety?",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    },
+    "Worthless": {
+        "Description": "… worthless?",
+        "Levels": {
+            "0": " None of the time",
+            "1": " A little of the time",
+            "2": " Some of the time",
+            "3": " Most of the time",
+            "4": "All of the time"
+        },
+        "LevelsOrig": {
+            "1": "All of the time",
+            "2": " Most of the time",
+            "3": " Some of the time",
+            "4": " A little of the time",
+            "5": " None of the time"
+        }
+    }
+}

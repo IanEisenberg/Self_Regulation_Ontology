@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=calc_DV_{EXP_ID}_{SUBSET}_refit
+#SBATCH --output=/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/{SUBSET}_output/hddm_refits/.out/calc_DV_{EXP_ID}_{SUBSET}_refit.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/{SUBSET}_output/hddm_refits/.err/calc_DV_{EXP_ID}_{SUBSET}_refit.err
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH -p russpold
+#SBATCH --time=168:00:00
+module load system
+module load singularity
+export PYTHONPATH=""
+# scratch is automatically mounted
+img=`sed '2q;d' singularity_config.txt`
+base_singularity=`sed '6q;d' singularity_config.txt`
+singularity_loc=${base_singularity}/$img
+data_loc=`sed '8q;d' singularity_config.txt`
+# on OAK
+output_loc=/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/{SUBSET}_output/hddm_refits
+
+
+
+singularity exec -B ${data_loc}:/Data ${singularity_loc} \
+    python /SRO/batch_files/helper_funcs/calculate_exp_DVs.py {EXP_ID} retest_subs_test --out_dir ${output_loc} --hddm_samples 90000 --hddm_burn 10000 --hddm_thin 1 --num_cores 7 --mode proactive

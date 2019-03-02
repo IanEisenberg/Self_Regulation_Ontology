@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=get_comp_time
+#SBATCH --output=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_02-03-2018/batch_output/.out/get_comp_time.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_02-03-2018/batch_output/.err/get_comp_time.job.err
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1
+#SBATCH --mem=16000
+#SBATCH --qos=normal
+#SBATCH -p russpold
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+source activate SRO
+python /oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/batch_files/retest/get_completion_time.py

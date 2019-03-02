@@ -1,0 +1,42 @@
+#!/bin/bash
+#SBATCH --job-name=fmri_download
+#SBATCH --output=.out/fmri_download.job.out
+#SBATCH --error=.err/fmri_download.job.err
+#SBATCH --time=8:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH -p russpold
+#SBATCH --cpus-per-task=8
+# SBATCH --mem=64000
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=ieisenbe@stanford.edu
+#module load system
+source activate ~/conda_envs/SRO/
+python ../data_preparation/fmri_download_data.py --job all
+
+
+
+#!/bin/bash
+#SBATCH --job-name=mturk_save
+#SBATCH --output=.out/mturk_save.job.out
+#SBATCH --error=.err/mturk_save.job.err
+#SBATCH --time=4:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+# SBATCH --mem=64000
+#SBATCH -p russpold
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=ieisenbe@stanford.edu
+export PYTHONPATH=""
+# scratch is automatically mounted
+img=`sed '2q;d' singularity_config.txt`
+base_singularity=`sed '6q;d' singularity_config.txt`
+singularity_loc=${base_singularity}/$img
+data_loc=`sed '8q;d' singularity_config.txt`
+expfactory_loc=`sed '10q;d' singularity_config.txt`
+
+singularity exec -B ${data_loc}:/Data -B ${expfactory_loc}:/expfactory_token  ${singularity_loc} \
+    python /SRO/data_preparation/fmri_followup_download_data.py --job post
+
+

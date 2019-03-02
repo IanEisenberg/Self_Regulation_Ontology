@@ -1,0 +1,10 @@
+Rscript irtfa.R 1
+Rscript irtfa.R 2
+Rscript irtfa.R 3
+Rscript irtfa.R 4
+Rscript irtfa.R 5
+Rscript irtfa.R 6
+Rscript irtfa.R 7
+Rscript irtfa.R 8
+Rscript irtfa.R 9
+Rscript irtfa.R 10

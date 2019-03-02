@@ -1,0 +1,389 @@
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key attr.name="weight" attr.type="double" for="edge" id="d2" />
+  <key attr.name="desc" attr.type="string" for="node" id="d1" />
+  <key attr.name="level" attr.type="long" for="node" id="d0" />
+  <graph edgedefault="directed">
+    <node id="4-3">
+      <data key="d0">4</data>
+      <data key="d1">4-3:impulsivity</data>
+    </node>
+    <node id="8-5">
+      <data key="d0">8</data>
+      <data key="d1">8-5:persistence</data>
+    </node>
+    <node id="9-9">
+      <data key="d0">9</data>
+      <data key="d1">9-9:mindfulness</data>
+    </node>
+    <node id="10-1">
+      <data key="d0">10</data>
+      <data key="d1">10-1:manic impulsivity</data>
+    </node>
+    <node id="10-8">
+      <data key="d0">10</data>
+      <data key="d1">10-8:impulsivity</data>
+    </node>
+    <node id="8-3">
+      <data key="d0">8</data>
+      <data key="d1">8-3:dysfunctional risk</data>
+    </node>
+    <node id="6-3">
+      <data key="d0">6</data>
+      <data key="d1">6-3:life impulsivity</data>
+    </node>
+    <node id="6-5">
+      <data key="d0">6</data>
+      <data key="d1">6-5:persistence</data>
+    </node>
+    <node id="2-1">
+      <data key="d0">2</data>
+      <data key="d1">2-1:persistence</data>
+    </node>
+    <node id="9-8">
+      <data key="d0">9</data>
+      <data key="d1">9-8:impulsivity</data>
+    </node>
+    <node id="10-10">
+      <data key="d0">10</data>
+      <data key="d1">10-10:emotion regulation</data>
+    </node>
+    <node id="10-9">
+      <data key="d0">10</data>
+      <data key="d1">10-9:mindfulness</data>
+    </node>
+    <node id="5-3">
+      <data key="d0">5</data>
+      <data key="d1">5-3:impulsivity</data>
+    </node>
+    <node id="8-7">
+      <data key="d0">8</data>
+      <data key="d1">8-7:life impulsivity</data>
+    </node>
+    <node id="8-8">
+      <data key="d0">8</data>
+      <data key="d1">8-8:mindfulness</data>
+    </node>
+    <node id="9-3">
+      <data key="d0">9</data>
+      <data key="d1">9-3:financial risk</data>
+    </node>
+    <node id="3-2">
+      <data key="d0">3</data>
+      <data key="d1">3-2:physical risk</data>
+    </node>
+    <node id="9-7">
+      <data key="d0">9</data>
+      <data key="d1">9-7:persistence</data>
+    </node>
+    <node id="5-1">
+      <data key="d0">5</data>
+      <data key="d1">5-1:manic impulsivity</data>
+    </node>
+    <node id="5-2">
+      <data key="d0">5</data>
+      <data key="d1">5-2:physical risk</data>
+    </node>
+    <node id="10-6">
+      <data key="d0">10</data>
+      <data key="d1">10-6:life risk</data>
+    </node>
+    <node id="10-7">
+      <data key="d0">10</data>
+      <data key="d1">10-7:persistence</data>
+    </node>
+    <node id="9-6">
+      <data key="d0">9</data>
+      <data key="d1">9-6:life risk</data>
+    </node>
+    <node id="7-6">
+      <data key="d0">7</data>
+      <data key="d1">7-6:unknown</data>
+    </node>
+    <node id="9-1">
+      <data key="d0">9</data>
+      <data key="d1">9-1:manic impulsivity</data>
+    </node>
+    <node id="7-5">
+      <data key="d0">7</data>
+      <data key="d1">7-5:persistence</data>
+    </node>
+    <node id="5-4">
+      <data key="d0">5</data>
+      <data key="d1">5-4:internalizing</data>
+    </node>
+    <node id="4-2">
+      <data key="d0">4</data>
+      <data key="d1">4-2:physical risk</data>
+    </node>
+    <node id="6-2">
+      <data key="d0">6</data>
+      <data key="d1">6-2:physical risk</data>
+    </node>
+    <node id="8-4">
+      <data key="d0">8</data>
+      <data key="d1">8-4:internalizing</data>
+    </node>
+    <node id="9-4">
+      <data key="d0">9</data>
+      <data key="d1">9-4:internalizing</data>
+    </node>
+    <node id="7-1">
+      <data key="d0">7</data>
+      <data key="d1">7-1:manic impulsivity</data>
+    </node>
+    <node id="3-3">
+      <data key="d0">3</data>
+      <data key="d1">3-3:impulsivity</data>
+    </node>
+    <node id="8-1">
+      <data key="d0">8</data>
+      <data key="d1">8-1:manic impulsivity</data>
+    </node>
+    <node id="10-5">
+      <data key="d0">10</data>
+      <data key="d1">10-5:mental energy</data>
+    </node>
+    <node id="9-2">
+      <data key="d0">9</data>
+      <data key="d1">9-2:physical risk</data>
+    </node>
+    <node id="7-3">
+      <data key="d0">7</data>
+      <data key="d1">7-3:dysfunctional risk</data>
+    </node>
+    <node id="8-2">
+      <data key="d0">8</data>
+      <data key="d1">8-2:physical risk</data>
+    </node>
+    <node id="6-4">
+      <data key="d0">6</data>
+      <data key="d1">6-4:internalizing</data>
+    </node>
+    <node id="10-4">
+      <data key="d0">10</data>
+      <data key="d1">10-4:internalizing</data>
+    </node>
+    <node id="4-4">
+      <data key="d0">4</data>
+      <data key="d1">4-4:internalizing</data>
+    </node>
+    <node id="4-1">
+      <data key="d0">4</data>
+      <data key="d1">4-1:persistence</data>
+    </node>
+    <node id="10-3">
+      <data key="d0">10</data>
+      <data key="d1">10-3:financial risk</data>
+    </node>
+    <node id="7-2">
+      <data key="d0">7</data>
+      <data key="d1">7-2:physical risk</data>
+    </node>
+    <node id="7-4">
+      <data key="d0">7</data>
+      <data key="d1">7-4:internalizing</data>
+    </node>
+    <node id="9-5">
+      <data key="d0">9</data>
+      <data key="d1">9-5:unknown</data>
+    </node>
+    <node id="7-7">
+      <data key="d0">7</data>
+      <data key="d1">7-7:life impulsivity</data>
+    </node>
+    <node id="2-2">
+      <data key="d0">2</data>
+      <data key="d1">2-2:risktaking</data>
+    </node>
+    <node id="8-6">
+      <data key="d0">8</data>
+      <data key="d1">8-6:unknown</data>
+    </node>
+    <node id="6-1">
+      <data key="d0">6</data>
+      <data key="d1">6-1:impulsivity</data>
+    </node>
+    <node id="3-1">
+      <data key="d0">3</data>
+      <data key="d1">3-1:persistence</data>
+    </node>
+    <node id="6-6">
+      <data key="d0">6</data>
+      <data key="d1">6-6:planning/sentimentality</data>
+    </node>
+    <node id="5-5">
+      <data key="d0">5</data>
+      <data key="d1">5-5:persistence</data>
+    </node>
+    <node id="10-2">
+      <data key="d0">10</data>
+      <data key="d1">10-2:physical risk</data>
+    </node>
+    <node id="1-1">
+      <data key="d0">1</data>
+      <data key="d1">1-1:persistence</data>
+    </node>
+    <edge source="4-3" target="5-1">
+      <data key="d2">0.835204576734002</data>
+    </edge>
+    <edge source="8-5" target="9-7">
+      <data key="d2">0.9692410586458755</data>
+    </edge>
+    <edge source="9-9" target="10-9">
+      <data key="d2">0.9769162284843674</data>
+    </edge>
+    <edge source="8-3" target="9-3">
+      <data key="d2">0.746472538230928</data>
+    </edge>
+    <edge source="6-3" target="7-3">
+      <data key="d2">0.9291968598329736</data>
+    </edge>
+    <edge source="6-3" target="7-7">
+      <data key="d2">0.9291968598329736</data>
+    </edge>
+    <edge source="6-5" target="7-5">
+      <data key="d2">0.9783518271939995</data>
+    </edge>
+    <edge source="2-1" target="3-1">
+      <data key="d2">0.8828769851213267</data>
+    </edge>
+    <edge source="9-8" target="10-8">
+      <data key="d2">0.8989164746644003</data>
+    </edge>
+    <edge source="5-3" target="6-3">
+      <data key="d2">0.7809337007488288</data>
+    </edge>
+    <edge source="5-3" target="6-6">
+      <data key="d2">-0.47720516351604625</data>
+    </edge>
+    <edge source="8-7" target="9-6">
+      <data key="d2">0.9360165360796291</data>
+    </edge>
+    <edge source="8-8" target="9-8">
+      <data key="d2">-0.9499236573648214</data>
+    </edge>
+    <edge source="8-8" target="9-9">
+      <data key="d2">-0.9499236573648214</data>
+    </edge>
+    <edge source="9-3" target="10-3">
+      <data key="d2">0.8908776396754898</data>
+    </edge>
+    <edge source="3-2" target="4-2">
+      <data key="d2">0.8827075849364197</data>
+    </edge>
+    <edge source="9-7" target="10-7">
+      <data key="d2">0.9583316035057767</data>
+    </edge>
+    <edge source="5-1" target="6-1">
+      <data key="d2">0.9416211770300162</data>
+    </edge>
+    <edge source="5-2" target="6-2">
+      <data key="d2">0.9631597186850899</data>
+    </edge>
+    <edge source="9-6" target="10-10">
+      <data key="d2">0.5120678060597305</data>
+    </edge>
+    <edge source="9-6" target="10-6">
+      <data key="d2">0.874607760683956</data>
+    </edge>
+    <edge source="7-6" target="8-6">
+      <data key="d2">0.9719961431261606</data>
+    </edge>
+    <edge source="9-1" target="10-1">
+      <data key="d2">0.9834306387499723</data>
+    </edge>
+    <edge source="7-5" target="8-5">
+      <data key="d2">0.904524265919726</data>
+    </edge>
+    <edge source="7-5" target="8-8">
+      <data key="d2">0.5589565207839643</data>
+    </edge>
+    <edge source="5-4" target="6-4">
+      <data key="d2">0.9656822811543976</data>
+    </edge>
+    <edge source="4-2" target="5-2">
+      <data key="d2">0.9755884918667397</data>
+    </edge>
+    <edge source="6-2" target="7-2">
+      <data key="d2">0.9300716314744972</data>
+    </edge>
+    <edge source="8-4" target="9-4">
+      <data key="d2">0.9733252048709585</data>
+    </edge>
+    <edge source="9-4" target="10-4">
+      <data key="d2">0.9415577998550043</data>
+    </edge>
+    <edge source="7-1" target="8-1">
+      <data key="d2">0.9946699105230543</data>
+    </edge>
+    <edge source="3-3" target="4-3">
+      <data key="d2">0.969346053076858</data>
+    </edge>
+    <edge source="8-1" target="9-1">
+      <data key="d2">0.9721140988913137</data>
+    </edge>
+    <edge source="9-2" target="10-2">
+      <data key="d2">0.9891103460412742</data>
+    </edge>
+    <edge source="7-3" target="8-3">
+      <data key="d2">0.9741756776460297</data>
+    </edge>
+    <edge source="8-2" target="9-2">
+      <data key="d2">0.9416489470529104</data>
+    </edge>
+    <edge source="6-4" target="7-4">
+      <data key="d2">0.9410874494401438</data>
+    </edge>
+    <edge source="4-4" target="5-4">
+      <data key="d2">0.9641655253174081</data>
+    </edge>
+    <edge source="4-1" target="5-5">
+      <data key="d2">-0.8506076227747297</data>
+    </edge>
+    <edge source="4-1" target="5-3">
+      <data key="d2">-0.8506076227747297</data>
+    </edge>
+    <edge source="7-2" target="8-2">
+      <data key="d2">0.9864470527338357</data>
+    </edge>
+    <edge source="7-4" target="8-4">
+      <data key="d2">0.9106692578279167</data>
+    </edge>
+    <edge source="9-5" target="10-5">
+      <data key="d2">0.8050298397988023</data>
+    </edge>
+    <edge source="7-7" target="8-7">
+      <data key="d2">0.9679664555542369</data>
+    </edge>
+    <edge source="2-2" target="3-3">
+      <data key="d2">0.7071112163982147</data>
+    </edge>
+    <edge source="2-2" target="3-2">
+      <data key="d2">0.7071112163982147</data>
+    </edge>
+    <edge source="8-6" target="9-5">
+      <data key="d2">0.8742582304839348</data>
+    </edge>
+    <edge source="6-1" target="7-1">
+      <data key="d2">0.8726989194429733</data>
+    </edge>
+    <edge source="3-1" target="4-1">
+      <data key="d2">0.9468744942858696</data>
+    </edge>
+    <edge source="3-1" target="4-4">
+      <data key="d2">-0.5246828315906942</data>
+    </edge>
+    <edge source="6-6" target="7-6">
+      <data key="d2">0.8411949956965098</data>
+    </edge>
+    <edge source="5-5" target="6-5">
+      <data key="d2">0.9882101629413912</data>
+    </edge>
+    <edge source="1-1" target="2-1">
+      <data key="d2">0.9707440393641924</data>
+    </edge>
+    <edge source="1-1" target="2-2">
+      <data key="d2">0.3027115523806415</data>
+    </edge>
+  </graph>
+</graphml>

@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=intratrial_reliability
+#SBATCH --output=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_03-29-2018/batch_output/.out/intratrial_reliability_{T}.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_03-29-2018/batch_output/.err/intratrial_reliability_{T}.job.err
+#SBATCH --time=4:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+# #SBATCH --mem=16000
+# #SBATCH --mail-type=FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+source activate SRO
+Rscript --vanilla threebytwo_intratrial_reliability.R /oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Complete_03-29-2018/ /oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_03-29-2018/ {T}

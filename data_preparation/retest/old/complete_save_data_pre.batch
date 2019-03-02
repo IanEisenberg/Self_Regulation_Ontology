@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --job-name=complete_save_data_pre
+#SBATCH --output=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Complete_10-27-2017/batch_output/.out/complete_save_data_pre.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Complete_10-27-2017/batch_output/.err/complete_save_data_pre.job.err
+#SBATCH --time=40:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+# #SBATCH --mem=16000
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+source /home/users/zenkavi/.bash_profile
+source activate SRO
+cd /oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology
+python data_preparation/retest/complete_save_data_pre.py

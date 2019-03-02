@@ -1,0 +1,374 @@
+{
+    "AbleToStopDrugs": {
+        "Description": "Are you always able to stop using drugs when you want to? (If never use\ndrugs, answer “Yes.” )",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "AbuseMoreThanOneDrugAtATime": {
+        "Description": "Do you abuse more than one drug at a time?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "AlcoholHowManyDrinksDay": {
+        "Description": "How many drinks containing alcohol do you have on a typical day when you are drinking?",
+        "Levels": {
+            "1": "1 or 2",
+            "2": "3 or 4",
+            "3": "5 or 6",
+            "4": "7 8 or 9",
+            "5": "10 or more"
+        }
+    },
+    "AlcoholHowOften": {
+        "Description": "How often do you have a drink containing alcohol?",
+        "Levels": {
+            "0": "Never",
+            "1": "Monthly or less",
+            "2": "2 to 4 times a month",
+            "3": "2 to 3 times a week",
+            "4": "4 or more times a week"
+        },
+        "LevelsOrig": {
+            "1": "Never",
+            "2": "Monthly or less",
+            "3": "2 to 4 times a month",
+            "4": "2 to 3 times a week",
+            "5": "4 or more times a week"
+        }
+    },
+    "AlcoholHowOften6Drinks": {
+        "Description": "How often do you have six or more drinks on one occasion?",
+        "Levels": {
+            "0": "Never",
+            "1": "Less than monthly",
+            "2": "Monthly",
+            "3": "Weekly",
+            "4": "Daily or almost daily"
+        },
+        "LevelsOrig": {
+            "1": "Never",
+            "2": "Less than monthly",
+            "3": "Monthly",
+            "4": "Weekly",
+            "5": "Daily or almost daily"
+        }
+    },
+    "BlackoutFlashbackDrugUse": {
+        "Description": "Have you had \"blackouts\" or \"flashbacks\" as a result of drug use?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "CannabisConsideredReduction": {
+        "Description": "Have you ever thought about cutting down, or stopping, your use of cannabis?",
+        "Levels": {
+            "0": "Never",
+            "2": " Yes but not in the past 6 months",
+            "4": " Yes during the past 6 months"
+        }
+    },
+    "CannabisHoursStoned": {
+        "Description": "How many hours were you ‘stoned’ on\na typical day when you had been using\nCannabis?",
+        "Levels": {
+            "0": "Less than 1",
+            "1": " 1 or 2",
+            "2": " 3 or 4",
+            "3": " 5 or 6",
+            "4": " 7 or more"
+        }
+    },
+    "CannabisHowOften": {
+        "Description": "How often do you use cannabis?",
+        "Levels": {
+            "0": "Never",
+            "1": " Less than monthly",
+            "2": " Monthly",
+            "3": " Weekly",
+            "4": " Daily or almost daily"
+        }
+    },
+    "CannabisPast6Months": {
+        "Description": " Have you used any cannabis over the past 6 months?",
+        "Levels": {
+            "0": " No",
+            "1": "Yes"
+        }
+    },
+    "CigsPerDay": {
+        "Description": "On average, how many cigarettes do you now smoke a day (1 pack = 20 cigarettes)?",
+        "Levels": {
+            "0": "I don't smoke",
+            "1": "Less than a cigarette a day",
+            "2": "<5",
+            "3": "5-10",
+            "4": "10-20",
+            "5": "1 pack",
+            "6": "2 packs",
+            "7": "More than 2 packs"
+        }
+    },
+    "EngagedInIllegalActsToObtainDrugs": {
+        "Description": "Have you engaged in illegal activities in order to obtain drugs?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "FeelBadGuiltyDrugUse": {
+        "Description": "Do you ever feel bad or guilty about your drug use? If never use drugs,\nchoose “No.”",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "HowLongSmoked": {
+        "Description": "How long have you smoked (cumulatively)?",
+        "Levels": {
+            "0": "I don't smoke",
+            "1": "Less than a year",
+            "2": "1 year",
+            "3": "2 years",
+            "4": " 3 years",
+            "5": "4 years",
+            "6": "5-10 years",
+            "7": "More than 10 years"
+        }
+    },
+    "HowOftenCantStopCannabis": {
+        "Description": "How often during the past six months did you find that you were not able to stop using cannabis once you had started?",
+        "Levels": {
+            "0": "Never",
+            "1": " Less than monthly",
+            "2": " Monthly",
+            "3": " Weekly",
+            "4": " Daily or almost daily"
+        }
+    },
+    "HowOftenCantStopDrinking": {
+        "Description": "How often during the last year have you found that you were not able to stop drinking once you had started?",
+        "Levels": {
+            "0": "Never",
+            "1": "Less than monthly",
+            "2": "Monthly",
+            "3": "Weekly",
+            "4": "Daily or almost daily"
+        },
+        "LevelsOrig": {
+            "1": "Never",
+            "2": "Less than monthly",
+            "3": "Monthly",
+            "4": "Weekly",
+            "5": "Daily or almost daily"
+        }
+    },
+    "HowOftenDevotedTimeCannabis": {
+        "Description": "How often in the past six months have you devoted a great deal of your time to getting, using, or recovering from cannabis?",
+        "Levels": {
+            "0": "Never",
+            "1": " Less than monthly",
+            "2": " Monthly",
+            "3": " Weekly",
+            "4": " Daily or almost daily"
+        }
+    },
+    "HowOftenDrinkMorning": {
+        "Description": "How often during the last year have you needed a first drink in the morning to get yourself going after a heavy drinking session?",
+        "Levels": {
+            "0": "Never",
+            "1": "Less than monthly",
+            "2": "Monthly",
+            "3": "Weekly",
+            "4": "Daily or almost daily"
+        },
+        "LevelsOrig": {
+            "1": "Never",
+            "2": "Less than monthly",
+            "3": "Monthly",
+            "4": "Weekly",
+            "5": "Daily or almost daily"
+        }
+    },
+    "HowOftenFailedActivitiesCannabis": {
+        "Description": "How often during the past six months did you fail to do what was normally expected from you because of using cannabis?",
+        "Levels": {
+            "0": "Never",
+            "1": " Less than monthly",
+            "2": " Monthly",
+            "3": " Weekly",
+            "4": " Daily or almost daily"
+        }
+    },
+    "HowOftenFailedActivitiesDrinking": {
+        "Description": "How often during the last year have you failed to do what was normally expected from you because of drinking?",
+        "Levels": {
+            "0": "Never",
+            "1": "Less than monthly",
+            "2": "Monthly",
+            "3": "Weekly",
+            "4": "Daily or almost daily"
+        },
+        "LevelsOrig": {
+            "1": "Never",
+            "2": "Less than monthly",
+            "3": "Monthly",
+            "4": "Weekly",
+            "5": "Daily or almost daily"
+        }
+    },
+    "HowOftenGuiltRemorseDrinking": {
+        "Description": "How often during the last year have you had a feeling of guilt or remorse after drinking?",
+        "Levels": {
+            "0": "Never",
+            "1": "Less than monthly",
+            "2": "Monthly",
+            "3": "Weekly",
+            "4": "Daily or almost daily"
+        },
+        "LevelsOrig": {
+            "1": "Never",
+            "2": "Less than monthly",
+            "3": "Monthly",
+            "4": "Weekly",
+            "5": "Daily or almost daily"
+        }
+    },
+    "HowOftenHazardousCannabis": {
+        "Description": "How often do you use cannabis in situations that could be physically hazardous, such as driving, operating machinery, or caring for children?",
+        "Levels": {
+            "0": "Never",
+            "1": " Less than monthly",
+            "2": " Monthly",
+            "3": " Weekly",
+            "4": " Daily or almost daily"
+        }
+    },
+    "HowOftenMemoryConcentrationProblemCannabis": {
+        "Description": "How often in the past six months have you had a problem with your memory or concentration after using cannabis?",
+        "Levels": {
+            "0": "Never",
+            "1": " Less than monthly",
+            "2": " Monthly",
+            "3": " Weekly",
+            "4": " Daily or almost daily"
+        }
+    },
+    "HowOftenUnableRememberDrinking": {
+        "Description": "How often during the last year have you been unable to remember what happened the night before because you had been drinking?",
+        "Levels": {
+            "1": "Never",
+            "2": "Less than monthly",
+            "3": "Monthly",
+            "4": "Weekly",
+            "5": "Daily or almost daily"
+        }
+    },
+    "HowSoonSmokeAfterWaking": {
+        "Description": "How soon after you wake up do you smoke your first cigarette?",
+        "Levels": {
+            "0": "I don't smoke",
+            "1": "Within 5 minutes",
+            "2": "6-30 minutes",
+            "3": "31-60 minutes",
+            "4": "After 60 minutes",
+            "5": "Don't know"
+        }
+    },
+    "InjuredDrinking": {
+        "Description": "Have you or someone else been injured as a result of your drinking?",
+        "Levels": {
+            "0": "I don't drink",
+            "1": "No",
+            "2": "Yes but not in the last year",
+            "3": "Yes during the last year"
+        },
+        "Nominal": true
+    },
+    "LifetimeSmoke100Cigs": {
+        "Description": "Altogether, have you smoked at least 100 or more cigarettes in your entire lifetime?",
+        "Levels": {
+            "0": "No",
+            "1": "Yes"
+        },
+        "LevelsOrig": {
+            "1": "Yes",
+            "2": "No"
+        }
+    },
+    "MeasurementToolMetadata": {
+        "Description": "Health",
+        "TermURL": ""
+    },
+    "MedicalProblemsDueToDrugUse": {
+        "Description": "Have you had medical problems as a result of your drug use (e.g.,\nmemory loss, hepatitis, convulsions, bleeding, etc.)?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "NeglectedFamilyDrugUse": {
+        "Description": "Have you neglected your family because of your use of drugs?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "OtherDrugs": {
+        "Description": "Have you used drugs other than those required for medical reasons?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "OtherTobaccoProducts": {
+        "Description": "In the past 30 days, what tobacco products OTHER THAN cigarettes have you used (check all that apply)?",
+        "Levels": {
+            "0": "Chewing tobacco (dip)",
+            "1": "Cigars",
+            "2": "Pipe",
+            "3": "Tobacco for your nose (snuff)",
+            "4": "E-cigarettes",
+            "5": "E-hookah or vape pens",
+            "6": "Cigarillos or little cigars",
+            "7": "Don't Know",
+            "8": "I don't smoke"
+        },
+        "Nominal": true
+    },
+    "RelativeFriendConcernedDrinking": {
+        "Description": "Has a relative or friend or a doctor or another health worker been concerned about your drinking or suggested you cut down?",
+        "Levels": {
+            "0": "I don't drink",
+            "1": "No",
+            "2": "Yes but not in the last year",
+            "3": "Yes during the last year"
+        }
+    },
+    "SmokeEveryDay": {
+        "Description": "Do you now smoke cigarettes every day, some days or not at all?",
+        "Levels": {
+            "0": "I don't smoke",
+            "1": "Not at all",
+            "2": "Some days",
+            "3": "Every day"
+        }
+    },
+    "SpouseParentsComplainDrugUse": {
+        "Description": "Does your spouse (or parents) ever complain about your involvement\nwith drugs?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    },
+    "WidthdrawalSymptoms": {
+        "Description": "Have you ever experienced withdrawal symptoms (felt sick) when you\nstopped taking drugs?",
+        "Levels": {
+            " 1": " Yes",
+            "0": "No"
+        }
+    }
+}

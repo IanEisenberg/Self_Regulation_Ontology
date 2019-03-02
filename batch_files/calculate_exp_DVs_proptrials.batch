@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --job-name=calc_DV_{EXP_ID}_{SUBSET}_{PROPTRIALS}_{RAND}
+#SBATCH --output=/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/mturk_retest_output/trial_num/.out/calc_DV_{EXP_ID}_{SUBSET}_{PROPTRIALS}_{RAND}.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/mturk_retest_output/trial_num/.err/calc_DV_{EXP_ID}_{SUBSET}_{PROPTRIALS}_{RAND}.err
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH -p russpold,owners,normal
+module load system
+module load x11
+#module load singularity
+export PYTHONPATH=""
+# scratch is automatically mounted
+img=`sed '2q;d' singularity_config_copy.txt`
+base_singularity=`sed '6q;d' singularity_config_copy.txt`
+singularity_loc=${base_singularity}/$img
+data_loc=`sed '8q;d' singularity_config_copy.txt`
+output_loc=/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/mturk_retest_output/trial_num
+singularity exec -B ${data_loc}:/Data ${singularity_loc} \
+    python /oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/batch_files/helper_funcs/calculate_exp_DVs_proptrials.py {EXP_ID} {SUBSET} --out_dir ${output_loc} --hddm_samples 90000 --hddm_burn 10000 --hddm_thin 1 --num_cores 7 --mode both --proptrials {PROPTRIALS} --rand {RAND}

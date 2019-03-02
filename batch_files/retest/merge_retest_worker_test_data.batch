@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=merge_retest_worker_test_data
+#SBATCH --output=/scratch/users/zenkavi/tmp/out/merge_retest_worker_test_data.job.out
+#SBATCH --error=/scratch/users/zenkavi/tmp/err/merge_retest_worker_test_data.job.err
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1
+#SBATCH --mem=16000
+#SBATCH --qos=normal
+#SBATCH -p russpold
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+source /home/zenkavi/.bash_profile
+python /scratch/users/zenkavi/tmp/py/merge_retest_worker_test_data.py

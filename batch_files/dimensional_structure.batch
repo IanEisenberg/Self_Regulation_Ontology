@@ -1,0 +1,29 @@
+#!/bin/bash
+#SBATCH --job-name={SUBSET}_{CLASSIFIER}_dim_struct
+#SBATCH --output=.out/{SUBSET}_{CLASSIFIER}_dim_struct.job.out
+#SBATCH --error=.err/{SUBSET}_{CLASSIFIER}_dim_struct.job.err
+#SBATCH --time=80:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+# SBATCH --mem=64000
+#SBATCH -p russpold
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=ieisenbe@stanford.edu
+module load singularity
+export PYTHONPATH=""
+# scratch is automatically mounted
+img=`sed '2q;d' singularity_config.txt`
+base_singularity=`sed '6q;d' singularity_config.txt`
+singularity_loc=${base_singularity}/$img
+data_loc=`sed '4q;d' singularity_config.txt`Data
+results_loc=`sed '4q;d' singularity_config.txt`Results
+script_loc=`sed '4q;d' singularity_config.txt`ideological_prediction
+
+if [ "{CLASSIFIER}" == "NONE" ]; then
+    singularity exec -B ${script_loc}:/SRO/dimensional_structure -B ${data_loc}:/SRO/Data -B ${results_loc}:/Results ${singularity_loc} \
+        python /SRO/dimensional_structure/generate_results.py -bootstrap -subset {SUBSET} -no_prediction -no_plot -no_group_plot -no_group_analysis 
+else
+    singularity exec -B ${script_loc}:/SRO/dimensional_structure -B ${data_loc}:/SRO/Data -B ${results_loc}:/Results ${singularity_loc} \
+    python /SRO/dimensional_structure/generate_results.py -bootstrap -shuffle_repeats 2500 -subset {SUBSET} -classifier {CLASSIFIER} -no_analysis -no_plot -no_group_plot -no_group_analysis
+fi

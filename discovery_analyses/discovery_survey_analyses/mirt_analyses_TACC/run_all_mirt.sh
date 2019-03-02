@@ -1,0 +1,16 @@
+Rscript run_mirt.R 1
+Rscript run_mirt.R 2
+Rscript run_mirt.R 3
+Rscript run_mirt.R 4
+Rscript run_mirt.R 5
+Rscript run_mirt.R 6
+Rscript run_mirt.R 7
+Rscript run_mirt.R 8
+Rscript run_mirt.R 9
+Rscript run_mirt.R 10
+Rscript run_mirt.R 11
+Rscript run_mirt.R 12
+Rscript run_mirt.R 13
+Rscript run_mirt.R 14
+Rscript run_mirt.R 15
+Rscript run_mirt.R 16

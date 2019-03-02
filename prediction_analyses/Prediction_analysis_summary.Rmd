@@ -1,0 +1,180 @@
+---
+title: "Prediction analyses"
+output: 
+  html_notebook: 
+    code_folding: hide
+
+
+---
+
+These results are based on the analyses performed using the singularity container on ls5 during period of October 21-23.  
+
+### Setup
+
+Load the data that were generated from the analysis output files (using singularity_analyses/reduce_results.py, singularity_analyses/reformat_results.py, and export_data_for_R.py)
+
+```{r load_data}
+library(DT)
+library(dplyr)
+classifier='rf'
+
+baseline=read.csv(sprintf('R_exports/%s_baseline.csv',classifier),row.names=1)
+baseline_shuffle=read.csv(sprintf('R_exports/%s_baseline_shuffle.csv',classifier),row.names=1)
+                          
+task=read.csv(sprintf('R_exports/%s_task.csv',classifier),row.names=1)
+task_shuffle=read.csv(sprintf('R_exports/%s_task_shuffle.csv',classifier),row.names=1)
+survey=read.csv(sprintf('R_exports/%s_survey.csv',classifier),row.names=1)
+survey_shuffle=read.csv(sprintf('R_exports/%s_survey_shuffle.csv',classifier),row.names=1)
+
+binary=apply(baseline_shuffle,2,mean,na.rm=TRUE)>0.25
+
+# load feature values
+task_features=read.csv(sprintf('R_exports/%s_task_features.csv',classifier),header=TRUE)
+# task_shuffle_features=read.csv(sprintf('R_exports/%s_task_shuffle_features.csv',classifier),header=TRUE)
+survey_features=read.csv(sprintf('R_exports/%s_survey_features.csv',classifier),header=TRUE)
+# survey_shuffle_features=read.csv(sprintf('R_exports/%s_survey_shuffle_features.csv',classifier),header=TRUE)
+baseline_features=read.csv(sprintf('R_exports/%s_baseline_features.csv',classifier),header=TRUE)
+# baseline_shuffle_features=read.csv(sprintf('R_exports/%s_baseline_shuffle_features.csv',classifier),header=TRUE)
+
+
+```
+
+Summarize the results 
+
+```{r compute_summaries}
+taskmean=apply(task,2,mean,na.rm=TRUE)
+results_df=data.frame(taskmean)
+results_df['surveymean']=apply(survey,2,mean,na.rm=TRUE)
+results_df['baselinemean']=apply(baseline,2,mean,na.rm=TRUE)
+results_df['taskmean_shuf']=apply(task_shuffle,2,mean,na.rm=TRUE)
+results_df['surveymean_shuf']=apply(survey_shuffle,2,mean,na.rm=TRUE)
+results_df['baselinemean_shuf']=apply(baseline_shuffle,2,mean,na.rm=TRUE)
+results_df['binary']=results_df['baselinemean_shuf']>0.25
+colnames(results_df$binary)='binary'
+results_df['measure']='r2'
+```
+Get p values vs. empirical null distribution
+```{r get_pvals}
+perc = function(x,d) {
+  # x is observed value, d is distribution
+  fx=ecdf(d)
+  return(fx(x))
+}
+for (v in rownames(results_df)) {
+  results_df[v,'task_p']=1-perc(results_df['taskmean'][rownames(results_df)==v,],baseline[,v])
+  results_df[v,'survey_p']=1-perc(results_df['surveymean'][rownames(results_df)==v,],baseline[,v])
+  results_df[v,'baseline_p']=1-perc(results_df['baselinemean'][rownames(results_df)==v,],baseline_shuffle[,v])
+
+}
+results_df['task_p_fdr']=p.adjust(results_df$task_p, method = 'BH')
+results_df['survey_p_fdr']=p.adjust(results_df$survey_p, method = 'BH')
+results_df['baseline_p_fdr']=p.adjust(results_df$baseline_p, method = 'BH')
+
+```
+
+### Prediction accuracy
+The following tables present the variables whose accuracy values were greater than expected under the null distribution (obtained by shuffling the target value).  The raw p-values from the empirical null distribution were then corrected within each analysis using FDR (BH).
+
+#### Above-chance prediction: Baseline (Age/Sex)
+Note: Sex and Age are obviously going to be completely predicted in this model, but I left them in as targets as a reality check.
+
+```{r baseline_accuracy }
+baseline_above_chance=subset(results_df,baseline_p_fdr<0.05)[c('baselinemean','baseline_p_fdr')] %>% tibble::rownames_to_column() %>% arrange(desc(baselinemean))
+colnames(baseline_above_chance)=c('Target variable','Mean accuracy (AUC/R2)','p (FDR)')
+datatable(baseline_above_chance, options = list(pageLength = 10))%>% formatRound(4)
+
+```
+
+#### Above-chance prediction: Survey
+```{r survey_accuracy}
+survey_above_chance=subset(results_df,survey_p_fdr<0.05)[c('surveymean','survey_p_fdr')] %>% tibble::rownames_to_column() %>% arrange(desc(surveymean))
+colnames(survey_above_chance)=c('Target variable','Mean accuracy (AUC/R2)','p (FDR)')
+datatable(survey_above_chance, options = list(pageLength = 10))%>% formatRound(4)
+
+```
+
+#### Above-chance prediction: Task
+```{r task_accuracy}
+task_above_chance=subset(results_df,task_p_fdr<0.05)[c('taskmean','task_p_fdr')] %>% tibble::rownames_to_column() %>% arrange(desc(taskmean))
+colnames(task_above_chance)=c('Target variable','Mean accuracy (AUC/R2)','p (FDR)')
+datatable(task_above_chance, options = list(pageLength = 10))%>% formatRound(4)
+
+
+```
+### Features
+Here we present the top two most important features for prediction of each variable, based on the feature importances obtained from the ExtraTrees classifier/regression in sklearn.
+
+
+```{r compute_features, warning=FALSE}
+# first compute mean loading for features X variables
+baseline_features_mean=aggregate(baseline_features,list(baseline_features$varname),mean) %>% select(-c(varname))
+task_features_mean=aggregate(task_features,list(task_features$varname),mean) %>% select(-c(varname))
+survey_features_mean=aggregate(survey_features,list(survey_features$varname),mean) %>% select(-c(varname))
+
+```
+
+#### Top predictive features: Baseline 
+
+
+```{r baseline_features, warning=FALSE}
+results_baseline=c()
+for (v in baseline_above_chance['Target variable'][,1]){
+  f=t(subset(baseline_features_mean,Group.1==v)%>% select(-c(Group.1)))
+  f_sorted=sort(f,decreasing = TRUE,index.return=TRUE)
+  retval=c(v)
+  for (i in f_sorted$ix) {
+    retval=c(retval,rownames(f)[i],f[i])
+  }
+  results_baseline=rbind(results_baseline,retval)
+}
+results_baseline=as.data.frame(results_baseline)
+results_baseline=results_baseline[,1:5]
+colnames(results_baseline)=c('Target variable','Feature1','Weight1','Feature2','Weight2')
+
+datatable(results_baseline, options = list(pageLength = 10))%>% formatRound(c('Weight1','Weight2'),4)
+```
+
+#### Top predictive features: Survey 
+
+```{r survey_features, warning=FALSE}
+results_survey=c()
+for (v in survey_above_chance['Target variable'][,1]){
+  f=t(subset(survey_features_mean,Group.1==v)%>% select(-c(Group.1)))
+  f_sorted=sort(f,decreasing = TRUE,index.return=TRUE)
+  retval=c(v)
+  for (i in f_sorted$ix) {
+    retval=c(retval,rownames(f)[i],f[i])
+  }
+  results_survey=rbind(results_survey,retval)
+}
+results_survey=as.data.frame(results_survey)
+results_survey=results_survey[,1:5]
+colnames(results_survey)=c('Target variable','Feature1','Weight1','Feature2','Weight2')
+
+datatable(results_survey, options = list(pageLength = 10))%>% formatRound(c('Weight1','Weight2'),4)
+
+```
+
+#### Top predictive features: Task 
+
+```{r task_features, warning=FALSE}
+
+results_task=c()
+for (v in task_above_chance['Target variable'][,1]){
+  f=t(subset(task_features_mean,Group.1==v)%>% select(-c(Group.1)))
+  f_sorted=sort(f,decreasing = TRUE,index.return=TRUE)
+  retval=c(v)
+  for (i in f_sorted$ix) {
+    retval=c(retval,rownames(f)[i],f[i])
+  }
+  results_task=rbind(results_task,retval)
+}
+results_task=as.data.frame(results_task)
+results_task=results_task[,1:5]
+colnames(results_task)=c('Target variable','Feature1','Weight1','Feature2','Weight2')
+
+datatable(results_task, options = list(pageLength = 10))%>% formatRound(c('Weight1','Weight2'),4)
+
+
+```
+

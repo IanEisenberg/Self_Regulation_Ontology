@@ -1,0 +1,4 @@
+9/1/16
+
+Self Regulation Survey had two problems. One, questions were put in factor loading order rather than the original order. Two, question 3 "I get easily distracted from my plans" was excluded
+and "Most of the time I don't pay attention to what I'm doing." was included twice instead. We average both responses on that question to rectify the problem.

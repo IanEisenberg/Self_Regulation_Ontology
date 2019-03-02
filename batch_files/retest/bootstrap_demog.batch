@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --job-name=bootstrap_demog
+#SBATCH --array=1-10%10
+#SBATCH --output=/oak/stanford/groups/russpold/users/ieisenbe/Self_Regulation_Ontology/behavioral_data/mturk_retest_output/bootstrap_output/.out/bootstrap_demog.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/ieisenbe/Self_Regulation_Ontology/behavioral_data/mturk_retest_output/bootstrap_output/.err/bootstrap_demog.job.err
+#SBATCH -p russpold,owners,normal
+#SBATCH --time=04:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+# #SBATCH --mem=16000
+# #SBATCH --mail-type=FAIL,END
+#SBATCH --mail-user=zenkavi@stanford.edu
+source activate SRO
+
+eval $( sed "${SLURM_ARRAY_TASK_ID}q;d" bootstrap_demog_tasklist )

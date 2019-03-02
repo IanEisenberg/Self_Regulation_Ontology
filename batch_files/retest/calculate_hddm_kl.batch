@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name=calculate_hddm_kl_{PPC_DATA_DIR}
+#SBATCH --output=/oak/stanford/groups/russpold/users/ieisenbe/Self_Regulation_Ontology/behavioral_data/mturk_retest_output/hddm_fitstat/.out/calculate_hddm_kl_{PPC_DATA_DIR}.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/ieisenbe/Self_Regulation_Ontology/behavioral_data/mturk_retest_output/hddm_fitstat/.err/calculate_hddm_kl_{PPC_DATA_DIR}.job.err
+#SBATCH -p russpold,owners,normal
+#SBATCH --nodes=1
+#SBATCH --mem-per-cpu=16G
+#SBATCH --mail-type=FAIL,END
+#SBATCH --mail-user=zenkavi@stanford.edu
+#SBATCH --time=80:00:00
+source activate SRO
+Rscript --vanilla calculate_hddm_kl.R /oak/stanford/groups/russpold/users/ieisenbe/Self_Regulation_Ontology/behavioral_data/mturk_retest_output/hddm_fitstat/{PPC_DATA_DIR}/

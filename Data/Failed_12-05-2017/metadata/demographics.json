@@ -1,0 +1,401 @@
+{
+    "Age": {
+        "Description": "How old are you (in years)?",
+        "Levels": {}
+    },
+    "ArrestedChargedLifeCount": {
+        "Description": "How many times in your life have you been arrested and/or charged with illegal activities?",
+        "Levels": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5-10",
+            "6": ">10"
+        },
+        "LevelsOrig": {
+            "1": "0",
+            "2": "1",
+            "3": "2",
+            "4": "3",
+            "5": "4",
+            "6": "5-10",
+            "7": ">10"
+        }
+    },
+    "CaffienatedSodaCansPerDay": {
+        "Description": "On average, how many cans of caffeinated soda do you have each day?",
+        "Levels": {}
+    },
+    "CaffieneOtherSourcesDayMG": {
+        "Description": "What is your daily caffeine intake from other sources each day (in mg)?",
+        "Levels": {}
+    },
+    "CarDebt": {
+        "Description": "How much car-related debt do you have?",
+        "Levels": {
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000",
+            "n/a": " Prefer Not To Say"
+        },
+        "LevelsOrig": {
+            " 0": " Prefer Not To Say",
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000"
+        }
+    },
+    "ChildrenNumber": {
+        "Description": "How many children do you have?",
+        "Levels": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5-10",
+            "6": ">10"
+        },
+        "LevelsOrig": {
+            "1": "0",
+            "2": "1",
+            "3": "2",
+            "4": "3",
+            "5": "4",
+            "6": "5-10",
+            "7": ">10"
+        }
+    },
+    "CoffeeCupsPerDay": {
+        "Description": "On average, how many cups of coffee do you have each day?",
+        "Levels": {}
+    },
+    "CreditCardDebt": {
+        "Description": "How much credit card debt do you have?",
+        "Levels": {
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000",
+            "n/a": " Prefer Not To Say"
+        },
+        "LevelsOrig": {
+            " 0": " Prefer Not To Say",
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000"
+        }
+    },
+    "DivorceCount": {
+        "Description": "How many times have you been divorced?",
+        "Levels": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "More"
+        }
+    },
+    "EducationDebt": {
+        "Description": "How much education debt do you have?",
+        "Levels": {
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000",
+            "n/a": " Prefer Not To Say"
+        },
+        "LevelsOrig": {
+            " 0": " Prefer Not To Say",
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000"
+        }
+    },
+    "GamblingProblem": {
+        "Description": "Do you feel you have a problem with gambling?",
+        "Levels": {
+            "0": "no",
+            "1": " yes in the past but not now",
+            "2": " yes"
+        },
+        "Nominal": true
+    },
+    "HeightInches": {
+        "Description": "How tall are you (in inches: one foot = 12 inches)?",
+        "Levels": {}
+    },
+    "HighestEducation": {
+        "Description": "What is the highest level of education you have completed?",
+        "Levels": {
+            "1": "Did Not Complete High School",
+            "2": " High School/GED",
+            "3": " Some College",
+            "4": " Bachelor's Degree",
+            "5": " Master's Degree",
+            "6": " Advanced Graduate work or Ph.D"
+        }
+    },
+    "HispanicLatino": {
+        "Description": "Are you of Hispanic, Latino or Spanish origin?",
+        "Levels": {
+            "0": " No",
+            "1": "Yes"
+        },
+        "Nominal": true
+    },
+    "HouseholdIncome": {
+        "Description": "What is your household's annual income (in dollars)?",
+        "Levels": {}
+    },
+    "LongestRelationship": {
+        "Description": "How long was/is your longest romantic relationship (in months: one year = 12 months)?",
+        "Levels": {}
+    },
+    "MeasurementToolMetadata": {
+        "Description": "Demographics",
+        "TermURL": ""
+    },
+    "MortgageDebt": {
+        "Description": "How much mortgage debt do you have?",
+        "Levels": {
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000",
+            "n/a": " Prefer Not To Say"
+        },
+        "LevelsOrig": {
+            " 0": " Prefer Not To Say",
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000"
+        }
+    },
+    "MotivationForParticipation": {
+        "Description": "What are you motivations for participating in this experiment?",
+        "Levels": {
+            "0": "money",
+            "1": "tasks are fun",
+            "2": "want to contribute to research",
+            "3": "other"
+        },
+        "Nominal": true
+    },
+    "MotivationOther": {
+        "Description": "If you have other motivations, please list them. ",
+        "Levels": {},
+        "Nominal": true
+    },
+    "OtherDebtAmount": {
+        "Description": "If you listed any other sources of debt, how much debt do you have?",
+        "Levels": {
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000",
+            "n/a": " Prefer Not To Say"
+        },
+        "LevelsOrig": {
+            "0": " Prefer Not To Say",
+            "1": "<$500",
+            "2": "$500-$2500",
+            "3": "$2500-$10000",
+            "4": "$10000-$25000",
+            "5": "$25000-$50000",
+            "6": "$50000-$100000",
+            "7": "$100000-$200000",
+            "8": ">$200000"
+        }
+    },
+    "OtherDebtSources": {
+        "Description": "Please list any other sources of debt you have:",
+        "Levels": {},
+        "Nominal": true
+    },
+    "OtherRace": {
+        "Description": "If you chose 'Other' for racial  background how would you describe it?",
+        "Levels": {},
+        "Nominal": true
+    },
+    "Race": {
+        "Description": "What is your race?",
+        "Levels": {
+            "0": "White",
+            "1": " American Indian or Alaska Native",
+            "2": "Chinese",
+            "3": "Japanese",
+            "4": " Filipino",
+            "5": "Korean",
+            "6": " Asian Indian",
+            "7": " Vietnamese",
+            "8": " Other Asian",
+            "9": " Black or African American",
+            "10": " Middle Eastern or North African",
+            "11": " Native Hawaiian or Other Pacific Islander",
+            "12": "Other",
+            "13": "Choose not to respond"
+        },
+        "Nominal": true
+    },
+    "RelationshipNumber": {
+        "Description": "How many romantic relationships have you had?",
+        "Levels": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5-10",
+            "6": ">10"
+        },
+        "LevelsOrig": {
+            "1": "0",
+            "2": "1",
+            "3": "2",
+            "4": "3",
+            "5": "4",
+            "6": "5-10",
+            "7": ">10"
+        }
+    },
+    "RelationshipStatus": {
+        "Description": "What is your relationship status?",
+        "Levels": {
+            "1": "Single",
+            "2": "Married",
+            "3": "In Committed Relationship"
+        },
+        "Nominal": true
+    },
+    "RentOwn": {
+        "Description": "Do you rent or own your home/apartment?",
+        "Levels": {
+            "0": "Rent",
+            "1": " Own"
+        },
+        "LevelsOrig": {
+            "1": "Rent",
+            "2": " Own"
+        },
+        "Nominal": true
+    },
+    "RetirementAccount": {
+        "Description": "Do you have a retirement account?",
+        "Levels": {
+            "0": "No",
+            "1": "Yes"
+        },
+        "LevelsOrig": {
+            "1": "Yes",
+            "2": "No"
+        }
+    },
+    "RetirementPercentStocks": {
+        "Description": "If you do have a retirement account what percent is in stocks?",
+        "Levels": {}
+    },
+    "Sex": {
+        "Description": "What is your sex?",
+        "Levels": {
+            "0": "Male",
+            "1": "Female"
+        },
+        "Nominal": true
+    },
+    "TeaCupsPerDay": {
+        "Description": "On average, how many cups of tea do you have each day?",
+        "Levels": {}
+    },
+    "TrafficAccidentsLifeCount": {
+        "Description": "How many traffic accidents have you been in over your life?",
+        "Levels": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5-10",
+            "6": ">10"
+        },
+        "LevelsOrig": {
+            "1": "0",
+            "2": "1",
+            "3": "2",
+            "4": "3",
+            "5": "4",
+            "6": "5-10",
+            "7": ">10"
+        }
+    },
+    "TrafficTicketsLastYearCount": {
+        "Description": "How many traffic tickets have you gotten in the last year?",
+        "Levels": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5-10",
+            "6": ">10"
+        },
+        "LevelsOrig": {
+            "1": "0",
+            "2": "1",
+            "3": "2",
+            "4": "3",
+            "5": "4",
+            "6": "5-10",
+            "7": ">10"
+        }
+    },
+    "WeightPounds": {
+        "Description": "How much do you weigh (in pounds)?",
+        "Levels": {}
+    }
+}

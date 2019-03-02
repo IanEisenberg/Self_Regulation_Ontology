@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name=extract_t1_data_{DATASET}
+#SBATCH --output=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_12-19-2018/batch_output/.out/extract_t1_data_{DATASET}.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_12-19-2018/batch_output/.err/extract_t1_data_{DATASET}.job.err
+#SBATCH --time=4:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+# #SBATCH --mem=16000
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+source activate SRO
+Rscript --vanilla extract_t1_csv_data.R {INPUT_PATH} {OUTPUT_PATH} {DATASET}

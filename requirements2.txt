@@ -1,0 +1,4 @@
+bctpy>=0.5.0
+# expanalysis
+#git+https://github.com/IanEisenberg/expfactory-analysis
+fancyimpute>=0.4.0

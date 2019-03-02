@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=ideology
+#SBATCH --output=.out/ideology.job.out
+#SBATCH --error=.err/ideology.job.err
+#SBATCH --time=40:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+# SBATCH --mem=64000
+#SBATCH -p russpold
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=ieisenbe@stanford.edu
+module load singularity
+export PYTHONPATH=""
+# scratch is automatically mounted
+img=`sed '2q;d' singularity_config.txt`
+base_singularity=`sed '6q;d' singularity_config.txt`
+singularity_loc=${base_singularity}/$img
+data_loc=`sed '4q;d' singularity_config.txt`Data
+results_loc=`sed '4q;d' singularity_config.txt`Results
+script_loc=`sed '4q;d' singularity_config.txt`ideological_prediction
+
+singularity exec -B ${script_loc}:/SRO/ideological_prediction -B ${data_loc}:/SRO/Data -B ${results_loc}:/Results ${singularity_loc} \
+    python /SRO/ideological_prediction/ideological_prediction.py -shuffle_repeats 1000
+
+

@@ -1,0 +1,10 @@
+# sro_prep singularity image
+sro-2018-12-09-fb1032b37d23.simg
+# location of SRO directory
+/oak/stanford/groups/russpold/users/ieisenbe/uh2/Self_Regulation_Ontology/
+# location of singularity images
+/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data/singularity_images
+# location of data (raw and post processed) that aren't directly included in Self_Regulation_Ontology repo
+/oak/stanford/groups/russpold/users/ieisenbe/uh2/behavioral_data
+# location of expfactory_token
+/home/users/ieisenbe/docs

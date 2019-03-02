@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --job-name=get_retest_worker_raw_test_data
+#SBATCH --output=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_12-19-2018/batch_output/.out/get_retest_worker_raw_test_data.job.out
+#SBATCH --error=/oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/Data/Retest_12-19-2018/batch_output/.err/get_retest_worker_raw_test_data.job.err
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1
+#SBATCH --qos=normal
+#SBATCH -p russpold
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=zenkavi@stanford.edu
+source /home/zenkavi/.bash_profile
+source activate SRO
+python /oak/stanford/groups/russpold/users/zenkavi/Self_Regulation_Ontology/batch_files/retest/get_retest_worker_raw_test_data.py
