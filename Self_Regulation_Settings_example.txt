@@ -1,3 +1,5 @@
 #Store a file like this called "Self_Regulation_Settings.txt" in Self_Regulation_Ontology base directory. Replace lines below with full paths to the corresponding directories and remove this comment so "expfactory_tokenL ..." is the first line. An optional "data_directory" may also be added using the same format. If it is excluded data will be saved in base_directory/Data
 expfactory_token:location of your expfactory token
 base_directory:location of Self Regulation Ontology directory
+results_directory:location of Self Regulation Ontology Results
+data_directory:location of Self Regulation Ontology Data
