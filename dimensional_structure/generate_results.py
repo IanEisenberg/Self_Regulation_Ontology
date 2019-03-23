@@ -539,13 +539,9 @@ if run_plot or group_plot:
             'cross_relationship': 'FigS02_cross_relationship',
             'BIC_curves': 'FigS03_BIC_curves',
             '%s/communality_adjustment' % rotate: 'FigS04_communality',
-            'survey/EFA/%s/factor_correlations_EFA12' % rotate: 'FigS05a_survey_correlation',
-            'task/EFA/%s/factor_correlations_EFA5' % rotate: 'FigS05b_task_correlation',
-            'task/DA/factor_correlations_EFA8': 'FigS05c_demo_correlation',
-            '%s/silhouette_analysis' % rotate: 'FigS06_HCA_Silhouettes',
-            'survey/prediction/IDM_lasso_prediction_bar': 'FigS07a_Survey_IDM_prediction',
-            'task/prediction/IDM_lasso_prediction_bar': 'FigS07b_Task_IDM_prediction',
-            'ontology_vs_survey_prediction_ridge': 'FigS08_ontology_prediction'
+            '%s/silhouette_analysis' % rotate: 'FigS05_HCA_Silhouettes',
+            'ontology_vs_survey_prediction_ridge': 'FigS06_ontology_prediction',
+            'task/DA/factor_correlations_EFA8': 'FigS07_demo_correlation'
             }
     
     paper_dir = path.join(basedir, 'Results', 'Psych_Ontology_Paper')
