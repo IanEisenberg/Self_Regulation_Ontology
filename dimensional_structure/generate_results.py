@@ -358,10 +358,10 @@ for subset in subsets:
                             """
                             plot_factor_fingerprint(results, change=False, rotate=rotate,
                                                     classifier=classifier,
-                                                    size=size, ext=ext, dpi=dpi, 
+                                                    size=10, ext=ext, dpi=dpi, 
                                                     plot_dir=rotate_plot_dir)
                             plot_factor_fingerprint(results, change=True, rotate=rotate,
-                                                    size=size, ext=ext, dpi=dpi, 
+                                                    size=10, ext=ext, dpi=dpi, 
                                                     classifier=classifier,
                                                     plot_dir=rotate_plot_dir)
                     else:

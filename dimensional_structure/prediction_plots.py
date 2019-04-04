@@ -66,10 +66,10 @@ def visualize_importance(importance, ax, xticklabels=True, yticklabels=True,
     # set up yticks
     if len(importance[1]) != 0:
         ax.set_ylim(bottom=0)
-        if ymax:
-            ax.set_ylim(top=ymax)
-        ytick_locs = ax.yaxis.get_ticklocs()
-        new_yticks = np.linspace(0, ytick_locs[-1], 7)
+        if ymax is None:
+            ymax = np.max(importance_vals)*1.1
+        ax.set_ylim(top=ymax)
+        new_yticks = np.linspace(0, ymax, 7)
         ax.set_yticks(new_yticks)
         if yticklabels:
             labels = np.round(new_yticks,2)
@@ -179,7 +179,7 @@ def plot_prediction(predictions, comparison_predictions,
     ax1.set_xticks(np.arange(0,len(r2s))+width/2)
     ax1.set_xticklabels([i[0] for i in r2s], rotation=15, fontsize=basefont*1.4)
     ax1.tick_params(axis='y', labelsize=size*1.2)
-    ax1.tick_params(length=size/4, width=size/10, pad=size/2)
+    ax1.tick_params(length=size/4, width=size/10, pad=size/2, left=True, bottom=True)
     xlow, xhigh = ax1.get_xlim()
     if normalize:
         ax1.set_ylabel('Permutation Normalized R2', fontsize=basefont, labelpad=10)
@@ -191,8 +191,9 @@ def plot_prediction(predictions, comparison_predictions,
         else:
             ax1.set_ylabel(metric, fontsize=basefont*1.5, labelpad=size*1.5)
     # add a legend
-    leg = ax1.legend(fontsize=basefont*1.4, loc='upper left', 
+    leg = ax1.legend(fontsize=basefont*1.4, loc='upper left', framealpha=1,
                      frameon=True, handlelength=0, handletextpad=0)
+    leg.get_frame().set_linewidth(size/10)
     beautify_legend(leg, colors[:2]+[shuffled_grey])
     # change y extents
     ylim = ax1.get_ylim()
@@ -237,7 +238,7 @@ def plot_prediction(predictions, comparison_predictions,
                         for i, k in enumerate(target_order)]
         plot_heights = [(h+zero_place+.02)*.5 for h in plot_heights]
         # mask heights
-        plot_heights = [plot_heights[i] if r2s[i][1]>shuffled_r2s[i][1] else np.nan
+        plot_heights = [plot_heights[i] if r2s[i][1]>max(shuffled_r2s[i][1],0) else np.nan
                         for i in range(len(plot_heights))]
         plot_x = (ax1.get_xticks()-xlow)/(xhigh-xlow)-(1/N/2)
         for i, importance in enumerate(importances):
@@ -483,7 +484,7 @@ def plot_factor_fingerprint(results, classifier='ridge', rotate='oblimin',
                              label_size=size*1.2,
                              label_scale=.2,
                              color=colors[0],
-                             ymax=math.ceil(np.max(importances)*10)/10)
+                             ymax=math.ceil(np.max(importances)*10)/10*1.1)
     
     if plot_dir is not None:
         changestr = '_change' if change else ''
