@@ -536,9 +536,9 @@ if run_plot or group_plot:
             'task/prediction/%s/EFA_ridge_prediction_bar' % rotate: 'Fig07_Task_prediction',
             'survey/prediction/%s/EFA_ridge_factor_fingerprint' % rotate: 'Fig08_Survey_Factor_Fingerprints',
             # test-retest
-            'cross_relationship': 'FigS02_cross_relationship',
-            'BIC_curves': 'FigS03_BIC_curves',
-            '%s/communality_adjustment' % rotate: 'FigS04_communality',
+            'cross_relationship': 'FigS01_cross_relationship',
+            'BIC_curves': 'FigS02_BIC_curves',
+            '%s/communality_adjustment' % rotate: 'FigS03_communality',
             '%s/silhouette_analysis' % rotate: 'FigS05_HCA_Silhouettes',
             'ontology_vs_survey_prediction_ridge': 'FigS06_ontology_prediction',
             'task/DA/factor_correlations_EFA8': 'FigS07_demo_correlation'
