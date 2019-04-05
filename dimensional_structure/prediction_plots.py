@@ -118,8 +118,7 @@ def plot_results_prediction(results, EFA=True, classifier='ridge',
     
 def plot_prediction(predictions, comparison_predictions, 
                     colors=None, EFA=None, comparison_label=None,
-                    target_order=None,  normalize=False, 
-                    metric='R2', size=4.6,  
+                    target_order=None,  metric='R2', size=4.6,  
                     dpi=300, filename=None):
     if colors is None:
         colors = [sns.color_palette('Purples_d', 4)[i] for i in [1,3]]
@@ -140,14 +139,10 @@ def plot_prediction(predictions, comparison_predictions,
         R2s = [i[metric] for i in comparison_predictions[k]['scores_cv']]
         R2_95 = np.percentile(R2s, 95)
         shuffled_r2s.append((k,R2_95))
-        if normalize:
-            r2s[i] = (r2s[i][0], r2s[i][1]-R2_95)
         # and insample
         R2s = [i[metric] for i in comparison_predictions[k]['scores_insample']]
         R2_95 = np.percentile(R2s, 95)
         insample_shuffled_r2s.append((k,R2_95))
-        if normalize:
-            insample_r2s[i] = (insample_r2s[i][0], insample_r2s[i][1]-R2_95)
         
     # convert nans to 0
     r2s = [(i, k) if k==k else (i,0) for i, k in r2s]
@@ -168,28 +163,22 @@ def plot_prediction(predictions, comparison_predictions,
     ax1.bar(ind+width, [i[1] for i in insample_r2s], width, 
             label='Insample prediction', color=colors[1])
     # plot shuffled values above
-    if not normalize:
-        ax1.bar(ind, [i[1] for i in shuffled_r2s], width, 
-                 color='none', edgecolor=shuffled_grey, 
-                linewidth=size/10, linestyle='--', label=comparison_label)
-        ax1.bar(ind+width, [i[1] for i in insample_shuffled_r2s], width, 
-                color='none', edgecolor=shuffled_grey, 
-                linewidth=size/10, linestyle='--')
+    ax1.bar(ind, [i[1] for i in shuffled_r2s], width, 
+             color='none', edgecolor=shuffled_grey, 
+            linewidth=size/10, linestyle='--', label=comparison_label)
+    ax1.bar(ind+width, [i[1] for i in insample_shuffled_r2s], width, 
+            color='none', edgecolor=shuffled_grey, 
+            linewidth=size/10, linestyle='--')
     
     ax1.set_xticks(np.arange(0,len(r2s))+width/2)
     ax1.set_xticklabels([i[0] for i in r2s], rotation=15, fontsize=basefont*1.4)
     ax1.tick_params(axis='y', labelsize=size*1.2)
     ax1.tick_params(length=size/4, width=size/10, pad=size/2, left=True, bottom=True)
     xlow, xhigh = ax1.get_xlim()
-    if normalize:
-        ax1.set_ylabel('Permutation Normalized R2', fontsize=basefont, labelpad=10)
-        ax1.hlines(0, xlow, xhigh, color='k', lw=size/5)
-        ax1.set_xlim(xlow,xhigh)
+    if metric == 'R2':
+        ax1.set_ylabel(r'$R^2$', fontsize=basefont*1.5, labelpad=size*1.5)
     else:
-        if metric == 'R2':
-            ax1.set_ylabel(r'$R^2$', fontsize=basefont*1.5, labelpad=size*1.5)
-        else:
-            ax1.set_ylabel(metric, fontsize=basefont*1.5, labelpad=size*1.5)
+        ax1.set_ylabel(metric, fontsize=basefont*1.5, labelpad=size*1.5)
     # add a legend
     leg = ax1.legend(fontsize=basefont*1.4, loc='upper left', framealpha=1,
                      frameon=True, handlelength=0, handletextpad=0)
@@ -207,10 +196,7 @@ def plot_prediction(predictions, comparison_predictions,
         ax1.yaxis.set_major_locator(ticker.MultipleLocator(.025))
     else:
         ax1.yaxis.set_major_locator(ticker.MultipleLocator(.05))
-        if normalize:
-            ax1.set_yticks(np.append([-.025, 0, .025, .05, .075], np.arange(.1, .45, .05)))
-        else:
-            ax1.set_yticks(np.append([0, .025, .05, .075, .1, .125], np.arange(.15, .45, .05)))
+        ax1.set_yticks(np.append([0, .025, .05, .075, .1, .125], np.arange(.15, .45, .05)))
     # draw grid
     ax1.set_axisbelow(True)
     plt.grid(axis='y', linestyle='dotted', linewidth=size/6)
