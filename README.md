@@ -57,8 +57,8 @@ dynamicTreeCut
 * source activate SRO
 * pip install -r requirements1.txt
 * pip install -r requirements2.txt
-* conda install -c r rpy2 --no-update-dependencies
-* conda install -c r r-essentials --no-update-dependencies
+* conda install -c r rpy2
+* conda install -c r r
 * pip install git+https://github.com/IanEisenberg/expfactory-analysis
 
 ## Docker usage
