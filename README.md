@@ -45,6 +45,7 @@ pip install git+https://github.com/IanEisenberg/expfactory-analysis
 ### R setup
 install:
 
+GPArotation
 missForest
 psych
 lme4

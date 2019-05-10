@@ -205,7 +205,7 @@ def k_nearest_reconstruction(results, drop_regex, available_vars=None,
     if verbose: print('Starting partial reconstruction, pop size:', pseudo_pop_size)
     estimated_loadings = pd.DataFrame()
     for rep in range(n_reps):
-        if verbose and rep%100==0: 
+        if verbose and rep%50==0: 
             print('Rep', rep)
         random_subset = data.sample(pseudo_pop_size)
         if independent_EFA:
@@ -317,5 +317,73 @@ def CV_predict(reconstruction, labels, cv=10, clf=LinearSVC(), test_set=None):
         scores['true_confusion'] = confusion_matrix(le.transform(test_set[1]), predicted)
     return scores
 
+def summarize_k(k_reconstructions):
+    """ Takes dictionary of k reconstructions and outputs a summary"""
+    var_summary = pd.DataFrame()
+    for measure, reconstruction in k_reconstructions.items():
+        tmp_summary = reconstruction.query('label=="partial_reconstruct"') \
+                        .groupby(['pop_size', 'k', 'weighting','var'])['corr_score'].mean().reset_index()
+        var_summary = pd.concat([var_summary, tmp_summary])
+    
+    k_summary = var_summary.groupby(['pop_size', 'k', 'weighting']).mean()
+    # summarize further
+    # determine best parameters
+    k_best_params = {}
+    for pop_size in k_summary.index.unique(level='pop_size'):
+        tmp=k_summary.query('pop_size == %s' % pop_size)
+        best_params = tmp.idxmax()[0]
+        best_val = tmp.loc[best_params][0]
+        k_best_params[pop_size] = {'k': best_params[1], 
+                                   'weighting': best_params[2],
+                                   'best_val': best_val}
+    # extract values using best parameters
+    reconstruction_list = []
+    for reconstruction in k_reconstructions.values():
+        true = reconstruction.query('label == "true"')
+        reconstruction_list.append(true)
+        for k, v in k_best_params.items():
+            tmp_partial = reconstruction.query('pop_size == %s and \
+                                         k == %s and \
+                                         weighting == "%s"' % (k, v['k'], v['weighting']))
+            full = reconstruction.query('label == "full_reconstruct" and \
+                                         k == %s and \
+                                         weighting == "%s"' % (v['k'], v['weighting']))
+            reconstruction_list += [tmp_partial, full]
 
-# reconstruction with fewer variables
+    k_best_reconstruction = pd.concat(reconstruction_list, axis=0, sort=False)
+    return var_summary, k_best_params, k_best_reconstruction
+
+# *****************************************************************************   
+# wrapper for running reconstructions with different parameters
+# *****************************************************************************  
+
+def run_reconstruction(results, measure_list, pop_sizes, n_reps, recon_fun,
+                       previous_files=None, append=True, verbose=True, **kwargs):
+    regex_list = ['^'+m for m in measure_list]
+    if previous_files is not None and len(previous_files) > 0:
+        previous_recon = load_files(previous_files)
+        if not append:
+            tmp_measures = set(measure_list) - set(k_reconstructions.keys())
+            regex_list = ['^'+m for m in tmp_measures]
+            
+    # run new reconstruction
+    new_recon = get_reconstruction_results(results, 
+                                           regex_list, 
+                                           pop_sizes,  
+                                           n_reps=n_reps, 
+                                           recon_fun=recon_fun, 
+                                           verbose=verbose,
+                                          **kwargs)
+    # determine measures that have been updated
+    updated = list(new_recon.keys())
+    
+    # update previous
+    if previous_files is not None and len(previous_files) > 0:
+        if append:
+            update_files(previous_recon, new_recon)
+        else:
+            previous_recon.update(new_recon)
+        to_return = previous_recon
+    else:
+        to_return = new_recon
+    return updated, to_return
