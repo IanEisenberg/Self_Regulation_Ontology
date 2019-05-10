@@ -2,6 +2,7 @@
 
 FROM python:3.5.3
 MAINTAINER Russ Poldrack <poldrack@gmail.com>
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 RUN apt-get update && apt-get install -y default-jre gfortran
 
 # installing R
@@ -17,11 +18,14 @@ RUN echo 'install.packages(c( \
   "foreach", \
   "iterators", \
   "glmnet", \
+  "GPArotation", \
+  "lme4", \
   "missForest", \
   "mpath", \
   "numDeriv", \
   "psych", \
   "pscl", \
+  "qgraph", \
   "tidyr" \
   ), \
   repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R && \
