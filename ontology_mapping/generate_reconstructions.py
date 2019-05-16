@@ -78,7 +78,7 @@ warnings.filterwarnings("ignore", category=sklearn.metrics.classification.Undefi
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-pop_sizes', nargs='+', default=[30, 50, 100, 400], type=int)
-    parser.add_argument('-n_reps', default=100)
+    parser.add_argument('-n_reps', default=250, type=int)
     parser.add_argument('-n_measures', default=None, type=int)
     parser.add_argument('-result_subset', default='task')
     parser.add_argument('-rerun', action='store_true')
@@ -158,17 +158,22 @@ var_list = results.data.filter(regex='|'.join(measure_list)).columns
 
 
 # %%time
+verbose=True
 for name, independent_flag in [('KNNR', False), ('KNNRind', True)]:
     k_list = list(range(1,20))
     basename = path.join(output_dir, '%s_%s-*' % (name, knn_metric))
     files = glob(basename)
+    if name == "KNNRind":
+        pops_to_use = [i for i in pop_sizes if i < 100]
+    else:
+        pops_to_use = pop_sizes
     updated, k_reconstructions = run_reconstruction(results, 
                                                    measure_list, 
-                                                   pop_sizes, 
+                                                   pops_to_use, 
                                                    n_reps, 
                                                    k_nearest_reconstruction,
                                                    previous_files=files, 
-                                                   append=True, 
+                                                   append=append, 
                                                    verbose=verbose, 
                                                    k_list=k_list, 
                                                    metric=knn_metric,
@@ -198,9 +203,11 @@ for clf_name, clf in clfs.items():
                                                    pop_sizes, 
                                                    n_reps, 
                                                    linear_reconstruction,
+                                                   previous_files=files, 
+                                                   append=append, 
+                                                   verbose=verbose, 
                                                    clf=clf,
-                                                   EFA_rotation=EFA_rotation,
-                                                   verbose=verbose)
+                                                   EFA_rotation=EFA_rotation)
     for measure in updated:
         df = reconstruction[measure]
         if save:

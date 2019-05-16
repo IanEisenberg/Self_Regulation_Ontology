@@ -204,19 +204,23 @@ def k_nearest_reconstruction(results, drop_regex, available_vars=None,
 
     if verbose: print('Starting partial reconstruction, pop size:', pseudo_pop_size)
     estimated_loadings = pd.DataFrame()
-    for rep in range(n_reps):
+    reps_remaining = n_reps
+    while reps_remaining > 0:
         if verbose and rep%50==0: 
             print('Rep', rep)
         random_subset = data.sample(pseudo_pop_size)
         if independent_EFA:
             tmp_subset = subset.drop(random_subset.index)
             loadings = run_EFA(tmp_subset, c, EFA_rotation, orig_loadings)
+            if loadings is None:
+                continue
         distances = pd.DataFrame(squareform(pdist(random_subset.T, metric=metric)), 
                                  index=random_subset.columns, 
                                  columns=random_subset.columns).drop(drop_vars, axis=1)
         out = run_kNeighbors(distances, loadings, drop_vars, weightings, k_list)
         out['rep'] = rep+1
         estimated_loadings = pd.concat([estimated_loadings, out], sort=False)
+        reps_remaining -= 1
     estimated_loadings.reset_index(drop=True)
     return estimated_loadings, full_reconstruction
 
