@@ -16,11 +16,17 @@ from sklearn.preprocessing import LabelEncoder
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
+from dimensional_structure.EFA_plots import get_communality
 from dimensional_structure.utils import abs_pdist
+from ontology_mapping.reconstruction_plots import (plot_factor_reconstructions,
+                                                    plot_reconstruction_hist,
+                                                  plot_distance_recon,
+                                                  plot_reconstruction_2D)
 from ontology_mapping.reconstruction_utils import (combine_files,
                                                    load_files,
                                                   summarize_k)
-from selfregulation.utils.utils import get_info, get_recent_dataset
+from selfregulation.utils.plot_utils import beautify_legend, format_num, save_figure
+from selfregulation.utils.utils import get_info, get_recent_dataset, get_retest_data
 from selfregulation.utils.result_utils import load_results
 
 
@@ -41,6 +47,9 @@ import seaborn as sns
 dataset = get_recent_dataset()
 results_dir = get_info('results_directory')
 ontology_results_dir = path.join(results_dir, 'ontology_reconstruction', dataset, '*', 'oblimin')
+retest_data = get_retest_data(dataset.replace('Complete', 'Retest'))
+plot_dir = glob(path.join(ontology_results_dir, 'Plots'))[0]
+save=True
 
 
 # In[ ]:
@@ -125,7 +134,8 @@ orig_distances = pd.DataFrame(squareform(abs_pdist(orig_loadings)), index=orig_l
 
 reconstructed_distances = {}
 for name, reconstruction in reconstructions.items():
-    for pop_size in sorted(reconstruction.pop_size.dropna().unique()):
+    pop_sizes = sorted(reconstruction.pop_size.dropna().unique())
+    for pop_size in pop_sizes:
         reconstructed_distances[name+'_%03d' % pop_size] = []
         for rep in range(1, int(reconstruction.rep.max()+1)):
             reconstructed_loadings = reconstruction.query('pop_size == %s and rep==%s' % (pop_size, rep)).sort_values(by='var')
@@ -150,9 +160,8 @@ for key, distances in reconstructed_distances.items():
 
 
 # variable characteristics
-reconstruction = reconstructions['KNN']
 retest_index = [i.replace('.logTr','').replace('.ReflogTr','') for i in reconstructed_vars]
-retest_vals = retest_data.loc[retest_index,'icc']
+retest_vals = retest_data.loc[retest_index,'icc3.k']
 retest_vals.index = reconstructed_vars
 communality = get_communality(results.EFA).loc[retest_index]
 communality.index = reconstructed_vars
@@ -164,7 +173,7 @@ avg_corr.name = "avg_correlation"
 
 
 # create summaries
-additional = pd.concat([retest_vals, communality, avg_corr], axis=1)
+additional = pd.concat([retest_vals, communality, avg_corr], axis=1, sort=True)
 reconstruction_summaries = {}
 for name, reconstruction in reconstructions.items():
     s = reconstruction.query('label == "partial_reconstruct"')         .groupby(['var', 'pop_size']).corr_score.agg(['mean', 'std'])
@@ -185,7 +194,7 @@ for i,group in all_reconstructions.groupby(['approach', 'pop_size']):
     group.columns = [i]
     tmp.append(group)
 approach_compare = pd.concat(tmp, axis=1)
-approach_compare.columns = [i+': '+str(int(j)) for i,j in approach_compare.columns]
+approach_compare.columns = [i.replace('KNN', 'KNNR') +': '+str(int(j)) for i,j in approach_compare.columns]
 # correlation of reconstructions
 corr= approach_compare.corr(method='spearman')
 overall_correlation = np.mean(corr.values[np.tril_indices_from(corr, -1)])
@@ -198,7 +207,7 @@ print('DV reconstruction score correlates %s across approaches' % format_num(ove
 
 
 all_reconstructions.loc[:, 'z_mean'] = np.arctanh(all_reconstructions['mean'])
-md = smf.mixedlm("z_mean ~ (pop_size + icc + communality)*C(approach, Sum)", all_reconstructions, groups=all_reconstructions["var"])
+md = smf.mixedlm("z_mean ~ (pop_size + Q('icc3.k') + communality)*C(approach, Sum)", all_reconstructions, groups=all_reconstructions["var"])
 mdf = md.fit()
 mdf.summary()
 
@@ -216,6 +225,7 @@ mdf.summary()
 # In[ ]:
 
 
+pop_sizes = sorted(reconstructions['KNN'].pop_size.dropna().unique())
 colors = sns.color_palette('Set1', n_colors = len(pop_sizes), desat=.8)
 
 
@@ -227,6 +237,8 @@ colors = sns.color_palette('Set1', n_colors = len(pop_sizes), desat=.8)
 f = plt.figure(figsize=(12,8))
 sns.boxplot(x='pop_size', y='mean', hue='approach', data=all_reconstructions, palette='Reds')
 plt.legend(loc='best')
+if save:
+    f.savefig(path.join(plot_dir, 'reconstruction_performance.png'), transparent=True)
 
 
 # Plot relationship of performance for each DV over different approach parameterizations
@@ -302,7 +314,7 @@ if save:
 desaturated_colors = [sns.desaturate(c, .5) for c in colors]
 plot_colors = list(zip(colors, desaturated_colors))
 
-plot_df = k_var_summary.reset_index()
+plot_df = KNNR_var_summary.reset_index()
 sns.set_context('talk')
 f, ax = plt.subplots(1, 1, figsize=(12,6))
 axes = f.get_axes()
@@ -345,7 +357,7 @@ ax.grid(False)
 # In[ ]:
 
 
-plot_reconstruction_hist(reconstructions['KNN'], title='KNN Reconstruction', size=14)
+plot_reconstruction_hist(reconstructions['KNN'], title='KNNR Reconstruction', size=14)
 plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstruction', size=14)
 
 
@@ -371,7 +383,7 @@ if save:
 
 sns.set_context('talk')
 sns.set_style('white')
-ind_vars = ['icc', 'communality'] # 'avg_correlation' could be included
+ind_vars = ['icc3.k', 'communality'] # 'avg_correlation' could be included
 N = len(ind_vars)*len(reconstruction_summaries.keys())
 size=6
 f, axes = plt.subplots(2,N,figsize=(size*N, size*2))
@@ -485,7 +497,7 @@ if save:
 # In[ ]:
 
 
-plot_reconstruction_2D(k_reconstruction, n_reps=30, n_colored=6, use_background=True)
+plot_reconstruction_2D(reconstructions['KNN'], n_reps=30, n_colored=6, use_background=True, seed=100)
 
 
 # ### Save Visualizations

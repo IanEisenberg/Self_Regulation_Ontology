@@ -43,11 +43,6 @@ import pickle
 import sklearn
 from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
 from sklearn.preprocessing import normalize
-
-from dimensional_structure.EFA_plots import get_communality
-from ontology_mapping.reconstruction_plots import (plot_factor_reconstructions,
-                                                    plot_reconstruction_hist,
-                                                  plot_distance_recon)
 from ontology_mapping.reconstruction_utils import (load_files,
                                                    combine_files,
                                                    update_files,
@@ -58,9 +53,8 @@ from ontology_mapping.reconstruction_utils import (load_files,
                                                    CV_predict,
                                                    summarize_k,
                                                    run_reconstruction)
-from selfregulation.utils.plot_utils import beautify_legend, format_num, save_figure
 from selfregulation.utils.result_utils import load_results
-from selfregulation.utils.utils import get_recent_dataset, get_info, get_retest_data
+from selfregulation.utils.utils import get_recent_dataset, get_info
 
 
 # In[ ]:
@@ -109,7 +103,6 @@ if __name__ == '__main__':
 # Load dataset
 np.random.seed(12412)
 results = load_results(dataset)[result_subset]
-retest_data = get_retest_data(dataset.replace('Complete', 'Retest'))
 c = results.EFA.get_c()
 
 # Define classifiers
