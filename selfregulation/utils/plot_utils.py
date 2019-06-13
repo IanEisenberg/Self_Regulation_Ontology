@@ -65,7 +65,9 @@ def beautify_legend(legend, colors=None, fontsize=None):
 # ********* Plotting Functions **********************
 #**************************************************
 
-def DDM_plot(v,t,a, sigma = .1, n = 10, plot_n = 15, plot_avg=False, file = None):
+def DDM_plot(v,t,a, sigma = .1, n = 10, plot_n = 15, 
+             subsample=1, percentiles=None, only_positive=False,
+             plot_distributions=True, plot_avg=False, file = None):
     """ Make a plot of trajectories using ddm parameters (in seconds)
     
     """
@@ -96,26 +98,32 @@ def DDM_plot(v,t,a, sigma = .1, n = 10, plot_n = 15, plot_avg=False, file = None
     negative_trajectories = [t[0] for t in trajectories if t[1] == 'fail']
     correct_rts = [len(t) for t in positive_trajectories]
     incorrect_rts = [len(t) for t in negative_trajectories]
-    # rts
     p_correct = len(positive_trajectories)/len(trajectories)
     plot_posn = int(plot_n*p_correct)
-    plot_posi = np.linspace(0,len(positive_trajectories)-1,plot_posn, dtype=int)
-    plot_negi = np.linspace(0,len(negative_trajectories)-1,plot_n-plot_posn, dtype=int)
-    
+    # rts
+    if percentiles is not None:
+        plot_posi = [int(len(positive_trajectories)*i) for i in percentiles]
+        plot_negi = [int(len(negative_trajectories)*i) for i in percentiles]
+    else:
+        plot_posi = np.linspace(0,len(positive_trajectories)-1,plot_posn, dtype=int)
+        plot_negi = np.linspace(0,len(negative_trajectories)-1,plot_n-plot_posn, dtype=int)
+    if only_positive:
+        plot_negi = []
     # plot
     sns.set_context('talk')
     plot_start = int(max(0,t-50))
     fig = plt.figure(figsize = [10,6])
     ax = fig.add_axes([0,.2,1,.6]) 
     ax.set_xticklabels([])
-    plt.hold(True)
     max_y = 0
     for y in [positive_trajectories[i] for i in plot_posi]:
-        plt.plot(timesteps[plot_start:len(y)],y[plot_start:], c = 'green', alpha=.6)
+        plt.plot(timesteps[plot_start:len(y):subsample],y[plot_start::subsample], 
+                           c = 'green', alpha=.8, lw=2)
         if len(y) > max_y:
             max_y = len(y)
     for y in [negative_trajectories[i] for i in plot_negi]:
-        plt.plot(timesteps[plot_start:len(y)],y[plot_start:], c = 'red', alpha=.6)
+        plt.plot(timesteps[plot_start:len(y):subsample],y[plot_start::subsample], 
+                           c = 'red', alpha=.8, lw=2)
         if len(y) > max_y:
             max_y = len(y)
     plt.xlim([plot_start,max_y+50])
@@ -127,47 +135,53 @@ def DDM_plot(v,t,a, sigma = .1, n = 10, plot_n = 15, plot_avg=False, file = None
     if plot_avg:
         plt.plot(timesteps[plot_start:len(avg_trajectory)], avg_trajectory[plot_start:],
                  linewidth=5, color='b', linestyle='--')
-    with sns.axes_style("white"):
-        # plot correct responses
-        ax2 = fig.add_axes([0,.8,1,.2]) 
-        sns.kdeplot(pd.Series(correct_rts), color = 'g', ax = ax2, shade = True)
-        ax2.set_xticklabels([])
-        ax2.set_yticklabels([])
-        ax2.text(np.sum(ax2.get_xlim())*.9, ax2.get_ylim()[1]*.5, 
-                 'Correct RT distribution', color='g',
-                 horizontalalignment='center')
-        # plot incorrect responses
-        ax3 = fig.add_axes([0,.2*p_correct,1,.2*(1-p_correct)])
-        ax3.set_xlabel('Time Step (ms)', fontsize = 24, labelpad=50)
-        if len(incorrect_rts) > 0:
-            sns.kdeplot(pd.Series(incorrect_rts), color = 'r', ax = ax3, shade = True)
-            ax3.set_yticklabels([])
-            ax.tick_params(axis='x', pad=40)
-        ax3.set_ylim(0, ax3.get_ylim()[1])
-        ax3.set_xticklabels([])
-        ax3.text(np.sum(ax3.get_xlim())*.9, ax3.get_ylim()[1]*1.2, 
-                 'Incorrect RT distribution', color='r',
-                 horizontalalignment='center')
-        ax3.invert_yaxis()
-        #remove spines
-        ax2.spines['top'].set_visible(False)
-        ax3.spines['bottom'].set_visible(False)
-        for axes in [ax, ax2, ax3]:
-            axes.spines['right'].set_visible(False)
-    # normalize xlabels
-    xmax = max([ax.get_xlim()[1], ax2.get_xlim()[1], ax3.get_xlim()[1]])
-    ax.set_xlim(right=xmax)
-    ax2.set_xlim(right=xmax)
-    ax3.set_xlim(right=xmax)
+    axes = [ax]
+    if plot_distributions:
+        with sns.axes_style("white"):
+            # plot correct responses
+            ax2 = fig.add_axes([0,.8,1,.2]) 
+            sns.kdeplot(pd.Series(correct_rts), color = 'g', ax = ax2, shade = True)
+            ax2.set_xticklabels([])
+            ax2.set_yticklabels([])
+            ax2.text(np.sum(ax2.get_xlim())*.9, ax2.get_ylim()[1]*.5, 
+                     'Correct RT distribution', color='g',
+                     horizontalalignment='center')
+            # plot incorrect responses
+            ax3 = fig.add_axes([0,.2*p_correct,1,.2*(1-p_correct)])
+            ax3.set_xlabel('Time Step (ms)', fontsize = 24, labelpad=50)
+            if len(incorrect_rts) > 0:
+                sns.kdeplot(pd.Series(incorrect_rts), color = 'r', ax = ax3, shade = True)
+                ax3.set_yticklabels([])
+                ax.tick_params(axis='x', pad=40)
+            ax3.set_ylim(0, ax3.get_ylim()[1])
+            ax3.set_xticklabels([])
+            ax3.text(np.sum(ax3.get_xlim())*.9, ax3.get_ylim()[1]*1.2, 
+                     'Incorrect RT distribution', color='r',
+                     horizontalalignment='center')
+            ax3.invert_yaxis()
+            axes+= [ax2, ax3]
+                
+    # normalize xmax based on longest trajectory
+    xmax = len(trajectories[-1][0])+t*2
+    for ai in axes:
+        ai.set_xlim(right=xmax)
+        ai.spines['right'].set_visible(False)
+        ai.spines['top'].set_visible(False)
+        ai.spines['bottom'].set_visible(False)
     # add dashed lines
     ax.hlines([a,-a],0,xmax,linestyles = 'dashed')
     ax.set_xticks(np.arange(*ax.get_xlim(), 200))
     ax.set_xticklabels([format_num(i,0) for i in np.arange(*ax.get_xlim(), 200)],
                        fontsize=20)
+    ax.tick_params(bottom=False)
     if file:
-        fig.savefig(file, dpi = 300)
+        fig.savefig(file, dpi = 300, transparent=True, bbox_inches='tight')
     return fig, trajectories
-#DDM_plot(1.2, .2, 3, n=100, plot_n=7)
+
+#example plot command
+#np.random.seed(100)
+#DDM_plot(1.2, .2, 2, n=100, plot_n=1, percentiles=[.2, .4, .95], only_positive=False,
+#         plot_distributions=True)
 
 def dendroheatmap(link, dist_df, clusters=None,
                   label_fontsize=None, labels=True,
