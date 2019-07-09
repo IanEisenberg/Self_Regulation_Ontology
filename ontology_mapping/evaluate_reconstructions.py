@@ -118,7 +118,7 @@ print(summary)
 # In[ ]:
 
 
-reconstructions = {'KNN': KNNR_reconstructions,
+reconstructions = {'KNNR': KNNR_reconstructions,
                    'RidgeCV': linear_reconstructions['RidgeCV']}
 reconstructed_vars = sorted(KNNR_reconstructions['var'].unique())
 assert set(reconstructed_vars) == set(reconstructions['RidgeCV']['var'].unique())
@@ -225,7 +225,7 @@ mdf.summary()
 # In[ ]:
 
 
-pop_sizes = sorted(reconstructions['KNN'].pop_size.dropna().unique())
+pop_sizes = sorted(reconstructions['KNNR'].pop_size.dropna().unique())
 colors = sns.color_palette('Set1', n_colors = len(pop_sizes), desat=.8)
 
 
@@ -338,7 +338,7 @@ plt.subplots_adjust(hspace=.4)
 
 
 var = "simon.hddm_drift"
-ax = reconstructions['KNN'].query('var == "%s" and pop_size==100' % var).corr_score.hist(bins=30,
+ax = reconstructions['KNNR'].query('var == "%s" and pop_size==100' % var).corr_score.hist(bins=30,
                                                                           edgecolor='white',
                                                                            figsize=[10,6])
 ax.set_xlabel('Reconstruction Score', fontsize=40, labelpad=30)
@@ -357,7 +357,7 @@ ax.grid(False)
 # In[ ]:
 
 
-plot_reconstruction_hist(reconstructions['KNN'], title='KNNR Reconstruction', size=14)
+plot_reconstruction_hist(reconstructions['KNNR'], title='KNNR Reconstruction', size=14)
 plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstruction', size=14)
 
 
@@ -366,8 +366,8 @@ plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstructi
 
 # saving
 if save:
-    plot_reconstruction_hist(reconstructions['KNN'], title='KNN Reconstruction', size=14,
-                            filename=path.join(plot_dir, 'Fig3a_KNN_reconstruction.png'))
+    plot_reconstruction_hist(reconstructions['KNNR'], title='KNNR Reconstruction', size=14,
+                            filename=path.join(plot_dir, 'Fig3a_KNNR_reconstruction.png'))
     plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstruction', size=14,
                             filename=path.join(plot_dir, 'Fig3b_RidgeCV_reconstruction.png'))
 
@@ -416,6 +416,52 @@ for i, (name, reconstruction) in enumerate(reconstruction_summaries.items()):
 
 axes[0][-1].legend(title='N')
 plt.subplots_adjust(wspace=.1, hspace=.1)
+
+
+# Simple plot for paper - just looking at mean for communality
+
+# In[ ]:
+
+
+sns.set_context('talk')
+sns.set_style('white')
+ind_vars = ['communality'] # 'avg_correlation' could be included
+N = len(ind_vars)*len(reconstruction_summaries.keys())
+size=6
+f, axes = plt.subplots(2,N,figsize=(size*N, size*2))
+for i, (name, reconstruction) in enumerate(reconstruction_summaries.items()):
+    for j, var in enumerate(ind_vars):
+        col_i = len(ind_vars)*i+j
+        for k, pop_size in enumerate(pop_sizes):
+            sns.regplot(var, 'mean', ci=None,
+                        data=reconstruction.query('pop_size==%s' % pop_size), 
+                        label=pop_size, ax=axes[0][col_i], color=colors[k])
+            sns.regplot(var, 'std', ci=None,
+                        data=reconstruction.query('pop_size==%s' % pop_size), 
+                        label=pop_size, ax=axes[1][col_i], color=colors[k])
+        # mean plots
+        axes[0][col_i].tick_params(bottom=False, labelbottom=False, left=True,
+                                  length=size/2, width=size/2)
+        axes[0][col_i].set_xlabel('')
+        axes[0][col_i].set_ylabel('')
+        axes[0][col_i].set_ylim(-.2, 1.1)
+        # sd plots
+        axes[1][col_i].tick_params(length=size/2, width=size/2, left=True, bottom=True)
+        axes[1][col_i].set_xlabel(var.title(), fontweight='bold', fontsize=size*4)
+        axes[1][col_i].set_ylabel('')
+        axes[1][col_i].set_ylim(-.05, .6)
+        if col_i==0:
+            axes[0][col_i].set_ylabel(r'$\mu$', fontweight='bold', fontsize=size*5)
+            axes[1][col_i].set_ylabel(r'$\sigma$', fontweight='bold', fontsize=size*5)
+        else:
+            axes[0][col_i].tick_params(left=False, labelleft=False)
+            axes[1][col_i].tick_params(left=False, labelleft=False)
+    f.text(0.31+.4*i, .93, name, ha='center', fontsize=size*5)
+
+axes[0][-1].legend(title='N', fontsize=size*3)
+plt.subplots_adjust(wspace=.1, hspace=.1)
+
+
 if save:
     save_figure(f, path.join(plot_dir, 'Fig4_DV_characteristics.png'), save_kws={'dpi': 300})
 
@@ -462,7 +508,7 @@ plot_distance_recon(mean_reconstructed_distances, orig_distances, size=12)
 # save
 if save:
     plot_distance_recon(mean_reconstructed_distances, orig_distances, size=15, 
-                       filename=path.join(plot_dir, 'Fig6_distance_reconstructions.png'))
+                       filename=path.join(plot_dir, 'Fig7_distance_reconstructions.png'))
 
 
 # #### Visualization of Variability
@@ -472,7 +518,7 @@ if save:
 # In[ ]:
 
 
-plot_factor_reconstructions(reconstructions['KNN'], size=15, plot_diagonal=True, plot_regression=False)
+plot_factor_reconstructions(reconstructions['KNNR'], size=15, plot_diagonal=True, plot_regression=False)
 plot_factor_reconstructions(reconstructions['RidgeCV'], size=15, plot_diagonal=True, plot_regression=False)
 
 
@@ -481,10 +527,10 @@ plot_factor_reconstructions(reconstructions['RidgeCV'], size=15, plot_diagonal=T
 
 # save
 if save:
-    plot_factor_reconstructions(reconstructions['KNN'], size=10, plot_diagonal=True, plot_regression=False,
-                                filename=path.join(plot_dir, 'Fig5a_KNN_factor_reconstructions.png'))
+    plot_factor_reconstructions(reconstructions['KNNR'], size=10, plot_diagonal=True, plot_regression=False,
+                                filename=path.join(plot_dir, 'Fig5_KNN_factor_reconstructions.png'))
     plot_factor_reconstructions(reconstructions['RidgeCV'], size=10, plot_diagonal=True, plot_regression=False,
-                                filename=path.join(plot_dir, 'Fig5b_RidgeCV_factor_reconstructions.png'))
+                                filename=path.join(plot_dir, 'Fig6_RidgeCV_factor_reconstructions.png'))
 
 
 # ##### Using TSNE
@@ -497,20 +543,7 @@ if save:
 # In[ ]:
 
 
-plot_reconstruction_2D(reconstructions['KNN'], n_reps=30, n_colored=6, use_background=True, seed=100)
-
-
-# ### Save Visualizations
-
-# In[ ]:
-
-
-if save:
-    for name, reconstruction in reconstructions.items():
-        plot_reconstruction_hist(reconstruction, title='KNN Reconstruction', size=14,
-                                filename=path.join(plot_dir, name+'_recon_hist.pdf'))
-        plot_factor_reconstructions(reconstruction, size=10,
-                                   filename=path.join(plot_dir, name+'_factor_recon.pdf'))
+plot_reconstruction_2D(reconstructions['KNNR'], n_reps=30, n_colored=6, use_background=True, seed=100)
 
 
 # ## Reduced Reconstruction using fewer contextualizing variables

@@ -7,11 +7,8 @@ import scipy
 from scipy.spatial.distance import pdist, squareform
 from sklearn.manifold import MDS, TSNE
 from sklearn.decomposition import PCA
-
 from dimensional_structure.utils import hierarchical_cluster
 from selfregulation.utils.plot_utils import beautify_legend, format_num, save_figure
-
-colors = sns.color_palette('Set1', n_colors = len(pop_sizes), desat=.8)
 
 def plot_factor_reconstructions(reconstructions, title=None, size=12, 
                                 plot_regression=True, plot_diagonal=False,
@@ -65,7 +62,7 @@ def plot_factor_reconstructions(reconstructions, title=None, size=12,
             if plot_diagonal:
                 xlim = ax.get_xlim()
                 ylim = ax.get_ylim()
-                ax.plot(xlim, ylim, ls="-", c=".5", zorder=-1)
+                ax.plot(xlim, ylim, ls="-", c=".5", linewidth=size/10, zorder=-1)
                 ax.set_xlim(xlim); ax.set_ylim(ylim)
             # labels and ticks
             ax.tick_params(axis='both', labelleft=False, labelbottom=False, bottom=False, left=False)
@@ -158,6 +155,7 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
     flattened_distances.columns = [' '.join(i.split('_')) for i in flattened_distances.columns]
 
     # plot
+    colors = sns.color_palette(n_colors = len(pop_sizes))
     f = plt.figure(figsize=(size,size))
     # create axes
     gs0 = gridspec.GridSpec(1, 2)
@@ -178,12 +176,12 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
                ax = distdistances_ax, square=True, cbar=False, annot=True,
                mask=mask, annot_kws={'fontsize':size})
     distdistances_ax.set_xlabel('Correlation among reconstructions', 
-                               size=size*2, labelpad=size*1.5)
-    distdistances_ax.tick_params(length=0, labelsize = size*1.5)
+                               size=size*2, labelpad=size*1.25)
+    distdistances_ax.tick_params(length=0, labelsize = size*1.25)
 
     for i in range(len(corr)):
         distdistances_ax.text((i+.5), (i-.25), corr.columns[i], 
-                        ha="center", va="bottom", rotation=90, fontsize=size*1.5)
+                        ha="center", va="bottom", rotation=90, fontsize=size*1.25)
     gs01 = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gs0[1])
     # plot the individual reconstructions
     keys = sorted(reconstructed_distances.keys())
@@ -235,6 +233,7 @@ def plot_reconstruction_2D(reconstructions, n_reps=None,
         
     N_pop = len(pop_sizes)
     # get colors
+    colors = sns.color_palette(n_colors = len(pop_sizes))
     tmp_subset = reconstructions.query('label=="true" or pop_size == %s'% pop_sizes[-1]).reset_index(drop=True)
     base_colors = sns.color_palette(palette='hls', n_colors=len(colored_vars))
     color_map = {k:v for k,v in zip(colored_vars, base_colors)}
