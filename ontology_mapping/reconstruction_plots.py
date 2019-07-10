@@ -46,8 +46,8 @@ def plot_factor_reconstructions(reconstructions, title=None, size=12,
                        markeredgecolor='white',
                        markeredgewidth=size/15,
                        linewidth=size/10)
-            ax.set_xlim([-.9,.9])
-            ax.set_ylim([-.9,.9])
+            #ax.set_xlim([-.9,.9])
+            #ax.set_ylim([-.9,.9])
             # calculate regression slope
             if plot_regression:
                 slope, intercept, r_value, p_value, std_err = \
@@ -62,8 +62,9 @@ def plot_factor_reconstructions(reconstructions, title=None, size=12,
             if plot_diagonal:
                 xlim = ax.get_xlim()
                 ylim = ax.get_ylim()
-                ax.plot(xlim, ylim, ls="-", c=".5", linewidth=size/10, zorder=-1)
-                ax.set_xlim(xlim); ax.set_ylim(ylim)
+                lims = [min(xlim[0], ylim[0]), max(xlim[1], ylim[1])]
+                ax.plot(lims, lims, ls="-", c=".5", linewidth=size/10, zorder=-1)
+                ax.set_xlim(lims); ax.set_ylim(lims)
             # labels and ticks
             ax.tick_params(axis='both', labelleft=False, labelbottom=False, bottom=False, left=False)
             if j==(len(pop_sizes)-1) and i==0:
@@ -141,7 +142,7 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
     # convert distances to flat array
     flattened_distances = {k:scipy.spatial.distance.squareform(v) for k,v in reconstructed_distances.items()}
     flattened_distances = pd.DataFrame(flattened_distances)
-    flattened_distances.insert(0, 'orig', scipy.spatial.distance.squareform(orig_distances))
+    flattened_distances.insert(0, 'original', scipy.spatial.distance.squareform(orig_distances))
     # clustered order
     out = hierarchical_cluster(orig_distances, compute_dist=False)
     orig_clustering = out['clustered_df']
@@ -153,7 +154,7 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
     nrows = len(pop_sizes)
     # change column names
     flattened_distances.columns = [' '.join(i.split('_')) for i in flattened_distances.columns]
-
+    flattened_distances.columns = [c.replace(' 0', ' ') for c in flattened_distances.columns]
     # plot
     colors = sns.color_palette(n_colors = len(pop_sizes))
     f = plt.figure(figsize=(size,size))
@@ -180,7 +181,7 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
     distdistances_ax.tick_params(length=0, labelsize = size*1.25)
 
     for i in range(len(corr)):
-        distdistances_ax.text((i+.5), (i-.25), corr.columns[i], 
+        distdistances_ax.text((i+.5), (i-.1), corr.columns[i], 
                         ha="center", va="bottom", rotation=90, fontsize=size*1.25)
     gs01 = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gs0[1])
     # plot the individual reconstructions

@@ -456,7 +456,7 @@ for i, (name, reconstruction) in enumerate(reconstruction_summaries.items()):
         else:
             axes[0][col_i].tick_params(left=False, labelleft=False)
             axes[1][col_i].tick_params(left=False, labelleft=False)
-    f.text(0.31+.4*i, .93, name, ha='center', fontsize=size*5)
+    f.text(0.31+.4*i, .9, name, ha='center', fontsize=size*5)
 
 axes[0][-1].legend(title='N', fontsize=size*3)
 plt.subplots_adjust(wspace=.1, hspace=.1)
