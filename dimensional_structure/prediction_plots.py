@@ -8,7 +8,7 @@ import pickle
 import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
 from dimensional_structure.plot_utils import get_short_names, plot_loadings
-
+from dimensional_structure.utils import hierarchical_cluster
 from selfregulation.utils.plot_utils import beautify_legend, CurvedText, format_num, save_figure
 
 ref_colors = {'survey': [sns.color_palette('Reds_d', 3)[i] for i in [0,2]], 
@@ -422,17 +422,38 @@ def plot_outcome_ontological_similarity(results, EFA=True, classifier='ridge',
     importances = np.vstack([predictions[k]['importances'] for k in targets])
     # convert to dataframe
     df = pd.DataFrame(importances, index=targets, columns=predictors)
-    plt.figure(figsize=(8,12))
-    f=sns.clustermap(df.T.corr(),
-                     cmap=sns.diverging_palette(220,15,n=100,as_cmap=True))
-    ax = f.ax_heatmap
-    ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
+    clustered = hierarchical_cluster(df, pdist_kws = {'metric': 'abscorrelation'})
+    corr = 1-clustered['clustered_df']
+    mask = np.zeros_like(corr)
+    mask[np.tril_indices_from(mask, -1)] = True
+    n = len(corr)
+    # plot
+    f = plt.figure(figsize=(size*5/4, size))
+    ax1 = f.add_axes([0,0,.9,.9])
+    cbar_ax = f.add_axes([.91, .05, .03, .8])
+    sns.heatmap(corr, ax=ax1, square=True, vmax=1, vmin=0,
+                cbar_ax=cbar_ax, linewidth=2,
+                cmap=sns.diverging_palette(220,15,n=100,as_cmap=True))
+    sns.heatmap(corr, ax=ax1, square=True, vmax=1, vmin=0,
+                cbar_ax=cbar_ax, annot=True, annot_kws={"size": size/n*15},
+                cmap=sns.diverging_palette(220,15,n=100,as_cmap=True),
+                mask=mask, linewidth=2)
+    yticklabels = ax1.get_yticklabels()
+    ax1.set_yticklabels(yticklabels, rotation=0, ha="right")
+    ax1.set_xticklabels(ax1.get_xticklabels(), rotation=90)
+    
+    ax1.tick_params(labelsize=size*2)
+    # format cbar
+    cbar_ax.tick_params(axis='y', length=0)
+    cbar_ax.tick_params(labelsize=size*2)
+    cbar_ax.set_ylabel('Pearson Correlation', rotation=-90, labelpad=size*4, fontsize=size*3)
     if plot_dir is not None:
-        filename = 'prediction_relevance'
+        filename = 'ontological_similarity.%s' % ext
         save_figure(f, path.join(plot_dir, filename), 
                     {'bbox_inches': 'tight', 'dpi': dpi})
         plt.close()
 
+        
 def plot_factor_fingerprint(results, classifier='ridge', rotate='oblimin', 
                             change=False, size=4.6,  
                             dpi=300, ext='png', plot_dir=None):
