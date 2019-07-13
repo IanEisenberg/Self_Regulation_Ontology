@@ -358,10 +358,10 @@ for subset in subsets:
                             """
                             plot_factor_fingerprint(results, change=False, rotate=rotate,
                                                     classifier=classifier,
-                                                    size=size, ext=ext, dpi=dpi, 
+                                                    size=10, ext=ext, dpi=dpi, 
                                                     plot_dir=rotate_plot_dir)
                             plot_factor_fingerprint(results, change=True, rotate=rotate,
-                                                    size=size, ext=ext, dpi=dpi, 
+                                                    size=10, ext=ext, dpi=dpi, 
                                                     classifier=classifier,
                                                     plot_dir=rotate_plot_dir)
                     else:
@@ -536,16 +536,12 @@ if run_plot or group_plot:
             'task/prediction/%s/EFA_ridge_prediction_bar' % rotate: 'Fig07_Task_prediction',
             'survey/prediction/%s/EFA_ridge_factor_fingerprint' % rotate: 'Fig08_Survey_Factor_Fingerprints',
             # test-retest
-            'cross_relationship': 'FigS02_cross_relationship',
-            'BIC_curves': 'FigS03_BIC_curves',
-            '%s/communality_adjustment' % rotate: 'FigS04_communality',
-            'survey/EFA/%s/factor_correlations_EFA12' % rotate: 'FigS05a_survey_correlation',
-            'task/EFA/%s/factor_correlations_EFA5' % rotate: 'FigS05b_task_correlation',
-            'task/DA/factor_correlations_EFA8': 'FigS05c_demo_correlation',
-            '%s/silhouette_analysis' % rotate: 'FigS06_HCA_Silhouettes',
-            'survey/prediction/IDM_lasso_prediction_bar': 'FigS07a_Survey_IDM_prediction',
-            'task/prediction/IDM_lasso_prediction_bar': 'FigS07b_Task_IDM_prediction',
-            'ontology_vs_survey_prediction_ridge': 'FigS08_ontology_prediction'
+            'cross_relationship': 'FigS01_cross_relationship',
+            'BIC_curves': 'FigS02_BIC_curves',
+            '%s/communality_adjustment' % rotate: 'FigS03_communality',
+            '%s/silhouette_analysis' % rotate: 'FigS05_HCA_Silhouettes',
+            'ontology_vs_survey_prediction_ridge': 'FigS06_ontology_prediction',
+            'task/DA/factor_correlations_EFA8': 'FigS07_demo_correlation'
             }
     
     paper_dir = path.join(basedir, 'Results', 'Psych_Ontology_Paper')

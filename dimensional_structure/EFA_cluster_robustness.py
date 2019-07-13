@@ -26,7 +26,18 @@ def tril(square):
     indices = np.tril_indices_from(square, -1)
     return square[indices]
     
-
+def print_stats(consensusClust):
+    m = np.mean(consensusClust.AMI_scores)
+    sd = np.std(consensusClust.AMI_scores)
+    print('AMI mean: %s, std: %s' % (m, sd))
+    print('AMI compared to consensus: %s' % consensusClust.compare_clusters())
+    
+    cooccurence = consensusClust.evaluate_relative_cooccurence().values()
+    within = np.mean([i[0] for i in cooccurence])
+    across = np.mean([i[1] for i in cooccurence])
+    closest = np.mean([i[2] for i in cooccurence])
+    print('Cooccurence, within: %s, across: %s, closest: %s' % (within, across, closest))
+    
 class ConsensusCluster():
     def __init__(self, results, percent_vars=1,
                  method='average', distance_metric='abscorrelation'):

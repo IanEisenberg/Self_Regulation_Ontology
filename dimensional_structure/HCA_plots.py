@@ -706,8 +706,8 @@ def plot_silhouette(results, inp='data', labels=None, axes=None,
     ax.axvline(x=avg_score, color="red", linestyle="--", linewidth=size*.1)
     ax.set_xlabel('Silhouette score', fontsize=size, labelpad=5)
     ax.set_ylabel('Cluster Separated DVs', fontsize=size)
-    ax.tick_params(pad=size/4, length=size/4, labelsize=size*.8, 
-                   left=False, labelleft=False)
+    ax.tick_params(pad=size/4, length=size/4, labelsize=size*.8, width=size/10,
+                   left=False, labelleft=False, bottom=True)
     ax.set_title('Dynamic tree cut', fontsize=size*1.2, y=1.02)
     ax.set_xlim(-1, 1)
     # plot silhouettes for constant thresholds
@@ -726,7 +726,7 @@ def plot_silhouette(results, inp='data', labels=None, axes=None,
     ax2.set_xlabel('Number of clusters', fontsize=size)
     ax2.set_ylabel('Average Silhouette Score', fontsize=size)
     ax2.set_title('Single cut height', fontsize=size*1.2, y=1.02)
-    ax2.tick_params(labelsize=size*.8, pad=size/4, length=size/4)
+    ax2.tick_params(labelsize=size*.8, pad=size/4, length=size/4, width=size/10, bottom=True)
     ax2.legend(loc='center right', fontsize=size*.8)
     plt.subplots_adjust(wspace=.3)
     if plot_dir is not None:

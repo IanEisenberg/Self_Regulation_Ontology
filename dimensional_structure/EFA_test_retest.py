@@ -185,7 +185,7 @@ def plot_EFA_change(combined, ax=None, color_on=False, method=PCA,
     ax.set_xlim(np.min(projection)-abs(np.min(projection))*.1, 
                 np.max(projection)+abs(np.max(projection))*.1)
     ax.set_ylim(ax.get_xlim())
-    ax.legend(fontsize=size*1.5)
+    ax.legend(fontsize=size*1.9)
     ax.get_legend().get_frame().set_linewidth(linewidth/2)
         
     if plot_dir is not None:
@@ -195,7 +195,8 @@ def plot_EFA_change(combined, ax=None, color_on=False, method=PCA,
     
     
 def plot_cross_EFA_retest(all_results, rotate='oblimin', size=4.6, dpi=300, 
-                          EFA_retest_fun=None, annot_heatmap=False, 
+                          EFA_retest_fun=None, plot_factor_corr=True,
+                          annot_heatmap=False, add_patch=False,
                           ext='png', plot_dir=None):
     if EFA_retest_fun is None:
         EFA_retest_fun = calc_EFA_retest
@@ -207,7 +208,8 @@ def plot_cross_EFA_retest(all_results, rotate='oblimin', size=4.6, dpi=300,
     num_rows = math.ceil(len(keys)*2/num_cols)
     with sns.axes_style('white'):
         fig, axes = plt.subplots(num_rows, num_cols, 
-                                 figsize=(size, size/2*num_rows))
+                                 figsize=(size, size/2*num_rows*1.1))
+    plt.subplots_adjust(hspace=.35)
     axes = fig.get_axes()
     cbar_ax = fig.add_axes([.2, .03, .2, .02])
     # get fontsize for factor labels
@@ -221,6 +223,16 @@ def plot_cross_EFA_retest(all_results, rotate='oblimin', size=4.6, dpi=300,
         # plot corr between test and retest
         num_labels = combined.shape[1]//2
         corr = combined.corr().iloc[:num_labels, num_labels:]
+        # plot factor correlations if flagged
+        if plot_factor_corr:
+            factor_corr = combined.corr().iloc[:num_labels, :num_labels]
+            upper_mask = np.triu(factor_corr,1)==0
+            lower_mask = np.tril(corr)==0
+            tmp_corr = np.tril(corr) + np.triu(factor_corr, 1)
+            corr.iloc[:,:] = tmp_corr
+        else:
+            lower_mask = np.ones(corr.shape)
+            factor_corr = None
         annot_fontsize = size/num_labels*7
         annot=False
         if annot_heatmap:
@@ -232,15 +244,30 @@ def plot_cross_EFA_retest(all_results, rotate='oblimin', size=4.6, dpi=300,
                                   'ticks': [-1, 0, 1]},
                         cmap=sns.diverging_palette(220,15,n=100,as_cmap=True),
                         annot=annot,
+                        mask=lower_mask,
                         annot_kws={'fontsize': annot_fontsize}); 
-            
             cbar_ax.set_xlabel('Pearson Correlation', fontsize=size*1.5)
             cbar_ax.tick_params(labelsize=size, pad=size/2, length=0)
         else:
             sns.heatmap(corr, square=True, ax=ax2, vmin=-1, vmax=1,
-                        cbar=False, annot=annot,
+                        cbar=False, annot=annot, mask=lower_mask,
                         cmap=sns.diverging_palette(220,15,n=100,as_cmap=True),
                         annot_kws={'fontsize': annot_fontsize})
+        if factor_corr is not None:
+            pos1 = ax2.get_position() # get the original position 
+            pos2 = [pos1.x0 + 0.01, pos1.y0 + 0.01,  pos1.width, pos1.height] 
+            factor_corr_ax = fig.add_axes(pos2)
+            factor_corr_ax.patch.set_alpha(0)
+            sns.heatmap(factor_corr, square=True, ax=factor_corr_ax, cbar_ax=cbar_ax, 
+                    vmin=-1, vmax=1,
+                    cbar_kws={'orientation': 'horizontal',
+                              'ticks': [-1, 0, 1]},
+                    cmap=sns.diverging_palette(220,15,n=100,as_cmap=True),
+                    annot=annot,
+                    mask=upper_mask,
+                    xticklabels=False, yticklabels=False,
+                    annot_kws={'fontsize': annot_fontsize}); 
+                            
         ax2.set_xticklabels('')
         ax2.set_yticks(np.arange(.5, num_labels+.5))
         ax2.set_yticklabels(combined.columns[:num_labels], rotation=0, va='center')
@@ -248,6 +275,7 @@ def plot_cross_EFA_retest(all_results, rotate='oblimin', size=4.6, dpi=300,
                         pad=size/2, length=0)
         ax2.tick_params(axis='x', length=0, pad=size/2)
         ax2.set_xlabel('Retest (T2)', fontsize=size*1.8)
+        factor_corr_ax.set_title('T1 Factor Correlations', fontsize=size*1.8, x=.6)
         ax2.set_ylabel('Test (T1)', fontsize=size*1.8)
         # add text for measurement category
         xlim = ax.get_xlim()
@@ -262,7 +290,14 @@ def plot_cross_EFA_retest(all_results, rotate='oblimin', size=4.6, dpi=300,
         place_letter(ax, letters.pop(0), fontsize=size*9/4.6)
         [i.set_linewidth(size*.1) for i in ax.spines.values()]
         [i.set_linewidth(size*.1) for i in ax2.spines.values()]
-    
+        if add_patch:
+            # add row patch
+            ax2.add_patch(plt.Rectangle([-.6,-.15], 
+                        width=3, height=1.31, zorder=-100,
+                        facecolor='#F8F8F8', edgecolor='white', 
+                        transform=ax2.transAxes,
+                        linewidth=1, clip_on=False))
+        
     if plot_dir is not None:
         filename = 'EFA_test_retest'
         if annot_heatmap:

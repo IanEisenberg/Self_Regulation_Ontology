@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import scipy
+from scipy.spatial.distance import pdist, squareform
 from sklearn.manifold import MDS, TSNE
 from sklearn.decomposition import PCA
-
 from dimensional_structure.utils import hierarchical_cluster
 from selfregulation.utils.plot_utils import beautify_legend, format_num, save_figure
 
@@ -46,6 +46,8 @@ def plot_factor_reconstructions(reconstructions, title=None, size=12,
                        markeredgecolor='white',
                        markeredgewidth=size/15,
                        linewidth=size/10)
+            #ax.set_xlim([-.9,.9])
+            #ax.set_ylim([-.9,.9])
             # calculate regression slope
             if plot_regression:
                 slope, intercept, r_value, p_value, std_err = \
@@ -60,8 +62,9 @@ def plot_factor_reconstructions(reconstructions, title=None, size=12,
             if plot_diagonal:
                 xlim = ax.get_xlim()
                 ylim = ax.get_ylim()
-                ax.plot(xlim, ylim, ls="-", c=".5", zorder=-1)
-                ax.set_xlim(xlim); ax.set_ylim(ylim)
+                lims = [min(xlim[0], ylim[0]), max(xlim[1], ylim[1])]
+                ax.plot(lims, lims, ls="-", c=".5", linewidth=size/10, zorder=-1)
+                ax.set_xlim(lims); ax.set_ylim(lims)
             # labels and ticks
             ax.tick_params(axis='both', labelleft=False, labelbottom=False, bottom=False, left=False)
             if j==(len(pop_sizes)-1) and i==0:
@@ -139,7 +142,7 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
     # convert distances to flat array
     flattened_distances = {k:scipy.spatial.distance.squareform(v) for k,v in reconstructed_distances.items()}
     flattened_distances = pd.DataFrame(flattened_distances)
-    flattened_distances.insert(0, 'orig', scipy.spatial.distance.squareform(orig_distances))
+    flattened_distances.insert(0, 'original', scipy.spatial.distance.squareform(orig_distances))
     # clustered order
     out = hierarchical_cluster(orig_distances, compute_dist=False)
     orig_clustering = out['clustered_df']
@@ -149,8 +152,11 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
     ncols = len(recon_names)
     pop_sizes = np.unique([int(i.split('_')[1]) for i in reconstructed_distances.keys()])
     nrows = len(pop_sizes)
-    
+    # change column names
+    flattened_distances.columns = [' '.join(i.split('_')) for i in flattened_distances.columns]
+    flattened_distances.columns = [c.replace(' 0', ' ') for c in flattened_distances.columns]
     # plot
+    colors = sns.color_palette(n_colors = len(pop_sizes))
     f = plt.figure(figsize=(size,size))
     # create axes
     gs0 = gridspec.GridSpec(1, 2)
@@ -162,21 +168,21 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
                 ax=orig_ax, vmin=0, vmax=1, square=True,
                xticklabels=False, yticklabels=False, cbar=False)
     orig_ax.set_title('Original Distance Matrix', 
-                      size=size*1.5, y=1.02)
+                      size=size*2, y=1.02)
     # plot correlation between reconstructions
     corr = flattened_distances.corr(method='pearson')
     mask = np.zeros_like(corr)
     mask[np.triu_indices_from(mask)] = True
     sns.heatmap(corr, vmin=0, vmax=1, yticklabels=True, xticklabels=False,
                ax = distdistances_ax, square=True, cbar=False, annot=True,
-               mask=mask, annot_kws={'fontsize':size*.8})
+               mask=mask, annot_kws={'fontsize':size})
     distdistances_ax.set_xlabel('Correlation among reconstructions', 
-                               size=size*1.5, labelpad=size*1.5)
-    distdistances_ax.tick_params(length=0)
+                               size=size*2, labelpad=size*1.25)
+    distdistances_ax.tick_params(length=0, labelsize = size*1.25)
 
     for i in range(len(corr)):
-        distdistances_ax.text((i+.5), (i-.25), corr.columns[i], 
-                        ha="center", va="bottom", rotation=90, fontsize=size)
+        distdistances_ax.text((i+.5), (i-.1), corr.columns[i], 
+                        ha="center", va="bottom", rotation=90, fontsize=size*1.25)
     gs01 = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gs0[1])
     # plot the individual reconstructions
     keys = sorted(reconstructed_distances.keys())
@@ -190,9 +196,10 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
                         cbar=False, vmin=0, vmax=1, square=True)
 
             if j==0:
-                axes[-1].set_title(recon_name, size=size*1.5, y=1.05)
-            if i==len(reconstructed_distances.keys())-1:
-                axes[-1].set_ylabel(pop, rotation=-90, labelpad=size*1.5, size=size*1.5)
+                axes[-1].set_title(recon_name, size=size*2, y=1.05)
+            if i==len(recon_names)-1:
+                axes[-1].set_ylabel(pop, rotation=-90, labelpad=size*2, size=size*2,
+                                   color=colors[j])
                 axes[-1].yaxis.set_label_position("right")
     if filename is not None:
         save_figure(f, filename, {'bbox_inches': 'tight', 'dpi': dpi})
@@ -201,13 +208,15 @@ def plot_distance_recon(reconstructed_distances, orig_distances, size=10, filena
 def plot_reconstruction_2D(reconstructions, n_reps=None, 
                            reducer = TSNE(2, metric='precomputed'),
                            n_colored=5, use_background=False,
-                           title=None, size=12, 
+                           seed=None,title=None, size=12, 
                            filename=None, dpi=300):
     if n_reps is None:
         n_reps = reconstructions.rep.max()
-    
+    if seed:
+        np.random.seed(seed)
     var_list = reconstructions['var'].unique()
     colored_vars = np.random.choice(var_list, size=n_colored, replace=False)
+    print(colored_vars)
     reconstructions = reconstructions[~(reconstructions.rep>n_reps)]
     reconstructions = reconstructions.query('label != "full_reconstruct"')
     if not use_background:
@@ -225,6 +234,7 @@ def plot_reconstruction_2D(reconstructions, n_reps=None,
         
     N_pop = len(pop_sizes)
     # get colors
+    colors = sns.color_palette(n_colors = len(pop_sizes))
     tmp_subset = reconstructions.query('label=="true" or pop_size == %s'% pop_sizes[-1]).reset_index(drop=True)
     base_colors = sns.color_palette(palette='hls', n_colors=len(colored_vars))
     color_map = {k:v for k,v in zip(colored_vars, base_colors)}
@@ -245,3 +255,4 @@ def plot_reconstruction_2D(reconstructions, n_reps=None,
     if filename is not None:
         save_figure(f, filename, {'bbox_inches': 'tight', 'dpi': dpi})
         plt.close()
+    np.random.seed()
