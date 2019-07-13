@@ -320,7 +320,7 @@ class CurvedText(mtext.Text):
     https://stackoverflow.com/questions/19353576/curved-text-rendering-in-matplotlib
     """
     def __init__(self, x, y, text, axes, **kwargs):
-        super(CurvedText, self).__init__(x[0],y[0],' ', axes, **kwargs)
+        super(CurvedText, self).__init__(x[0],y[0],' ', **kwargs)
 
         axes.add_artist(self)
 
