@@ -206,3 +206,37 @@ for clf_name, clf in clfs.items():
         if save:
             df.to_pickle(basename[:-1]+'-%s.pkl' % measure)
 
+
+# ### K Nearest Neighbor Partial Reconstruction
+
+# In[ ]:
+
+
+for num_available_measures in range(5,len(measures),5):
+    # repeat with different samples of measures
+    for sample_repeats in range(50):
+        if verbose and sample_repeats%5==0:
+            print('SAMPLE %s FOR %s MEASURES' % (sample_repeats, num_available_measures))
+        basename = path.join(output_dir, '%s_%s-*' % ('KNNRpartial', knn_metric))
+        files = glob(basename)
+        k_list=[13]
+        updated, k_reconstructions = run_reconstruction(results, 
+                                                       measure_list, 
+                                                       pop_sizes, 
+                                                       n_reps=10, 
+                                                       recon_fun=k_nearest_reconstruction,
+                                                       previous_files=files, 
+                                                       append=append, 
+                                                       verbose=False, 
+                                                       k_list=k_list, 
+                                                       metric=knn_metric,
+                                                       independent_EFA=False,
+                                                       EFA_rotation=EFA_rotation,
+                                                       num_available_measures=num_available_measures,
+                                                       weightings=['distance'])
+
+        for measure in updated:
+            df = k_reconstructions[measure]
+            if save:
+                df.to_pickle(basename[:-1]+'%s.pkl' % measure)
+

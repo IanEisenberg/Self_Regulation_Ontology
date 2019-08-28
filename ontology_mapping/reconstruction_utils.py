@@ -25,10 +25,11 @@ def load_files(reconstruction_files, query_string=None):
 
 def update_files(old, new):
     for k, df in old.items():
-        add = new.pop(k)
-        add = add.query('label == "partial_reconstruct"')
-        add.loc[:,'rep'] += df.rep.max()
-        old[k] = pd.concat([df, add], sort=False).reset_index(drop=True)
+        if k in new.keys():
+            add = new.pop(k)
+            add = add.query('label == "partial_reconstruct"')
+            add.loc[:,'rep'] += df.rep.max()
+            old[k] = pd.concat([df, add], sort=False).reset_index(drop=True)
     old.update(new)
         
 def combine_files(reconstruction_files, query_string=None):
@@ -162,12 +163,13 @@ def run_kNeighbors(distances, loadings, test_vars,
             to_return = pd.concat([to_return, out], sort=False)
     return to_return
     
-def k_nearest_reconstruction(results, drop_regex, available_vars=None,
+def k_nearest_reconstruction(results, drop_regex, num_available_measures=None,
                              pseudo_pop_size=60, n_reps=100, 
                              k_list=None, EFA_rotation='oblimin', 
                              metric='correlation',
                              independent_EFA=False,
-                             verbose=True):
+                             verbose=True,
+                             weightings = ['uniform', 'distance']):
     def run_EFA(data, c, rotation, orig_loading):
         fa, out = psychFA(data, c, rotate=EFA_rotation)
         loadings = pd.DataFrame(out['loadings'], index=data.columns)
@@ -186,13 +188,22 @@ def k_nearest_reconstruction(results, drop_regex, available_vars=None,
     # check to see if loadings are problematic (not highly correlated with original scores)
     if loadings is None:
         return None, None
-    weightings = ['uniform', 'distance']
-    if available_vars is not None:
+    if num_available_measures is not None:
+        measures = np.unique([i.split('.')[0] for i in results.data.columns])
+        measures = [x for x in measures if x not in drop_regex]
+        available_measures =  np.random.choice(measures, num_available_measures, replace=False)
+        available_vars = results.data.filter(regex='^'+'|^'.join(available_measures)).columns
         data = data.loc[:, set(available_vars) | set(drop_vars)]
         loadings = loadings.loc[available_vars,:]
+        k_list = [k for k in k_list if k<len(available_vars)]
+        if len(k_list) == 0:
+            k_list = [len(available_vars)-1]
     if verbose:
         print('*'*79)
         print('Reconstructing', drop_vars)
+        if num_available_measures is not None:
+            print('*'*79)
+            print('Using subset of measures:', available_measures)
         print('*'*79)
     if verbose: print('Starting full reconstruction')
     distances = pd.DataFrame(squareform(pdist(data.T, metric=metric)), 
@@ -206,6 +217,7 @@ def k_nearest_reconstruction(results, drop_regex, available_vars=None,
     estimated_loadings = pd.DataFrame()
     reps_remaining = n_reps
     while reps_remaining > 0:
+        rep = n_reps-reps_remaining
         if verbose and rep%50==0: 
             print('Rep', rep)
         random_subset = data.sample(pseudo_pop_size)
@@ -219,9 +231,16 @@ def k_nearest_reconstruction(results, drop_regex, available_vars=None,
                                  columns=random_subset.columns).drop(drop_vars, axis=1)
         out = run_kNeighbors(distances, loadings, drop_vars, weightings, k_list)
         out['rep'] = rep+1
+        out
         estimated_loadings = pd.concat([estimated_loadings, out], sort=False)
         reps_remaining -= 1
     estimated_loadings.reset_index(drop=True)
+    # add columns to dataframes
+    if num_available_measures is not None:
+        estimated_loadings['num_available_measures'] = num_available_measures
+        estimated_loadings['available_vars'] = ','.join(available_vars)
+        full_reconstruction['num_available_measures'] = num_available_measures
+        full_reconstruction['available_vars'] = ','.join(available_vars)
     return estimated_loadings, full_reconstruction
 
 def corr_scoring(organized_results):
@@ -356,6 +375,15 @@ def summarize_k(k_reconstructions):
 
     k_best_reconstruction = pd.concat(reconstruction_list, axis=0, sort=False)
     return var_summary, k_best_params, k_best_reconstruction
+
+def summarize_k_partial(k_reconstructions):
+    """ Takes dictionary of k reconstructions and outputs a summary"""
+    var_summary = pd.DataFrame()
+    for measure, reconstruction in k_reconstructions.items():
+        tmp_summary = reconstruction.query('label=="partial_reconstruct"') \
+                        .groupby(['num_available_measures', 'pop_size', 'available_vars', 'var'])['corr_score'].mean().reset_index()
+        var_summary = pd.concat([var_summary, tmp_summary])
+    return var_summary
 
 # *****************************************************************************   
 # wrapper for running reconstructions with different parameters

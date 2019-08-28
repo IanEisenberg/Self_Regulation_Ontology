@@ -24,7 +24,8 @@ from ontology_mapping.reconstruction_plots import (plot_factor_reconstructions,
                                                   plot_reconstruction_2D)
 from ontology_mapping.reconstruction_utils import (combine_files,
                                                    load_files,
-                                                  summarize_k)
+                                                  summarize_k,
+                                                  summarize_k_partial)
 from selfregulation.utils.plot_utils import beautify_legend, format_num, save_figure
 from selfregulation.utils.utils import get_info, get_recent_dataset, get_retest_data
 from selfregulation.utils.result_utils import load_results
@@ -80,6 +81,14 @@ KNNRind_var_summary, KNNRind_best_params, KNNRind_reconstructions = summarize_k(
 # In[ ]:
 
 
+KNNRpartial_files = glob(path.join(ontology_results_dir, 'KNNRpartial_*'))
+KNNRpartial_loaded = load_files(KNNRpartial_files)
+KNNRpartial_var_summary = summarize_k_partial(KNNRpartial_loaded)
+
+
+# In[ ]:
+
+
 ridge_files = glob(path.join(ontology_results_dir, '*RidgeCV*'))
 ridge_loaded = load_files(ridge_files)
 linear_files = glob(path.join(ontology_results_dir, '*Linear*'))
@@ -118,7 +127,7 @@ print(summary)
 # In[ ]:
 
 
-reconstructions = {'KNN': KNNR_reconstructions,
+reconstructions = {'KNNR': KNNR_reconstructions,
                    'RidgeCV': linear_reconstructions['RidgeCV']}
 reconstructed_vars = sorted(KNNR_reconstructions['var'].unique())
 assert set(reconstructed_vars) == set(reconstructions['RidgeCV']['var'].unique())
@@ -194,7 +203,7 @@ for i,group in all_reconstructions.groupby(['approach', 'pop_size']):
     group.columns = [i]
     tmp.append(group)
 approach_compare = pd.concat(tmp, axis=1)
-approach_compare.columns = [i.replace('KNN', 'KNNR') +': '+str(int(j)) for i,j in approach_compare.columns]
+approach_compare.columns = [i +': '+str(int(j)) for i,j in approach_compare.columns]
 # correlation of reconstructions
 corr= approach_compare.corr(method='spearman')
 overall_correlation = np.mean(corr.values[np.tril_indices_from(corr, -1)])
@@ -225,7 +234,7 @@ mdf.summary()
 # In[ ]:
 
 
-pop_sizes = sorted(reconstructions['KNN'].pop_size.dropna().unique())
+pop_sizes = sorted(reconstructions['KNNR'].pop_size.dropna().unique())
 colors = sns.color_palette('Set1', n_colors = len(pop_sizes), desat=.8)
 
 
@@ -338,7 +347,7 @@ plt.subplots_adjust(hspace=.4)
 
 
 var = "simon.hddm_drift"
-ax = reconstructions['KNN'].query('var == "%s" and pop_size==100' % var).corr_score.hist(bins=30,
+ax = reconstructions['KNNR'].query('var == "%s" and pop_size==100' % var).corr_score.hist(bins=30,
                                                                           edgecolor='white',
                                                                            figsize=[10,6])
 ax.set_xlabel('Reconstruction Score', fontsize=40, labelpad=30)
@@ -357,7 +366,7 @@ ax.grid(False)
 # In[ ]:
 
 
-plot_reconstruction_hist(reconstructions['KNN'], title='KNNR Reconstruction', size=14)
+plot_reconstruction_hist(reconstructions['KNNR'], title='KNNR Reconstruction', size=14)
 plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstruction', size=14)
 
 
@@ -366,8 +375,8 @@ plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstructi
 
 # saving
 if save:
-    plot_reconstruction_hist(reconstructions['KNN'], title='KNN Reconstruction', size=14,
-                            filename=path.join(plot_dir, 'Fig3a_KNN_reconstruction.png'))
+    plot_reconstruction_hist(reconstructions['KNNR'], title='KNNR Reconstruction', size=14,
+                            filename=path.join(plot_dir, 'Fig3a_KNNR_reconstruction.png'))
     plot_reconstruction_hist(reconstructions['RidgeCV'], title='RidgeCV Reconstruction', size=14,
                             filename=path.join(plot_dir, 'Fig3b_RidgeCV_reconstruction.png'))
 
@@ -416,8 +425,54 @@ for i, (name, reconstruction) in enumerate(reconstruction_summaries.items()):
 
 axes[0][-1].legend(title='N')
 plt.subplots_adjust(wspace=.1, hspace=.1)
+
+
+# Simple plot for paper - just looking at mean for communality
+
+# In[ ]:
+
+
+sns.set_context('talk')
+sns.set_style('white')
+ind_vars = ['communality'] # 'avg_correlation' could be included
+N = len(ind_vars)*len(reconstruction_summaries.keys())
+size=6
+f, axes = plt.subplots(2,N,figsize=(size*N, size*2))
+for i, (name, reconstruction) in enumerate(reconstruction_summaries.items()):
+    for j, var in enumerate(ind_vars):
+        col_i = len(ind_vars)*i+j
+        for k, pop_size in enumerate(pop_sizes):
+            sns.regplot(var, 'mean', ci=None,
+                        data=reconstruction.query('pop_size==%s' % pop_size), 
+                        label=pop_size, ax=axes[0][col_i], color=colors[k])
+            sns.regplot(var, 'std', ci=None,
+                        data=reconstruction.query('pop_size==%s' % pop_size), 
+                        label=pop_size, ax=axes[1][col_i], color=colors[k])
+        # mean plots
+        axes[0][col_i].tick_params(bottom=False, labelbottom=False, left=True,
+                                  length=size/2, width=size/2)
+        axes[0][col_i].set_xlabel('')
+        axes[0][col_i].set_ylabel('')
+        axes[0][col_i].set_ylim(-.2, 1.1)
+        # sd plots
+        axes[1][col_i].tick_params(length=size/2, width=size/2, left=True, bottom=True)
+        axes[1][col_i].set_xlabel(var.title(), fontweight='bold', fontsize=size*4)
+        axes[1][col_i].set_ylabel('')
+        axes[1][col_i].set_ylim(-.05, .6)
+        if col_i==0:
+            axes[0][col_i].set_ylabel(r'$\mu$', fontweight='bold', fontsize=size*5)
+            axes[1][col_i].set_ylabel(r'$\sigma$', fontweight='bold', fontsize=size*5)
+        else:
+            axes[0][col_i].tick_params(left=False, labelleft=False)
+            axes[1][col_i].tick_params(left=False, labelleft=False)
+    f.text(0.31+.4*i, .9, name, ha='center', fontsize=size*5)
+
+axes[0][-1].legend(title='N', fontsize=size*3)
+plt.subplots_adjust(wspace=.1, hspace=.1)
+
+
 if save:
-    save_figure(f, path.join(plot_dir, 'Fig4_DV_characteristics.png'), save_kws={'dpi': 300})
+    save_figure(f, path.join(plot_dir, 'Fig5_DV_characteristics.png'), save_kws={'dpi': 300})
 
 
 # It seems clear that DVs with poor reliability and communality are not reconstructed well. A less "analysis based" way to think about this is reconstruction will be worse if you are far away from the other variables in the set.
@@ -462,7 +517,7 @@ plot_distance_recon(mean_reconstructed_distances, orig_distances, size=12)
 # save
 if save:
     plot_distance_recon(mean_reconstructed_distances, orig_distances, size=15, 
-                       filename=path.join(plot_dir, 'Fig6_distance_reconstructions.png'))
+                       filename=path.join(plot_dir, 'Fig8_distance_reconstructions.png'))
 
 
 # #### Visualization of Variability
@@ -472,7 +527,7 @@ if save:
 # In[ ]:
 
 
-plot_factor_reconstructions(reconstructions['KNN'], size=15, plot_diagonal=True, plot_regression=False)
+plot_factor_reconstructions(reconstructions['KNNR'], size=15, plot_diagonal=True, plot_regression=False)
 plot_factor_reconstructions(reconstructions['RidgeCV'], size=15, plot_diagonal=True, plot_regression=False)
 
 
@@ -481,10 +536,10 @@ plot_factor_reconstructions(reconstructions['RidgeCV'], size=15, plot_diagonal=T
 
 # save
 if save:
-    plot_factor_reconstructions(reconstructions['KNN'], size=10, plot_diagonal=True, plot_regression=False,
-                                filename=path.join(plot_dir, 'Fig5a_KNN_factor_reconstructions.png'))
+    plot_factor_reconstructions(reconstructions['KNNR'], size=10, plot_diagonal=True, plot_regression=False,
+                                filename=path.join(plot_dir, 'Fig6_KNN_factor_reconstructions.png'))
     plot_factor_reconstructions(reconstructions['RidgeCV'], size=10, plot_diagonal=True, plot_regression=False,
-                                filename=path.join(plot_dir, 'Fig5b_RidgeCV_factor_reconstructions.png'))
+                                filename=path.join(plot_dir, 'Fig7_RidgeCV_factor_reconstructions.png'))
 
 
 # ##### Using TSNE
@@ -497,179 +552,7 @@ if save:
 # In[ ]:
 
 
-plot_reconstruction_2D(reconstructions['KNN'], n_reps=30, n_colored=6, use_background=True, seed=100)
-
-
-# ### Save Visualizations
-
-# In[ ]:
-
-
-if save:
-    for name, reconstruction in reconstructions.items():
-        plot_reconstruction_hist(reconstruction, title='KNN Reconstruction', size=14,
-                                filename=path.join(plot_dir, name+'_recon_hist.pdf'))
-        plot_factor_reconstructions(reconstruction, size=10,
-                                   filename=path.join(plot_dir, name+'_factor_recon.pdf'))
-
-
-# ## Reduced Reconstruction using fewer contextualizing variables
-
-# In[ ]:
-
-
-results = results
-regex_list = ['^stroop']
-n_reps = 5
-k_list = (5,10)
-metric = knn_metric
-EFA_rotation = 'oblimin'
-independent_EFA=False
-recon_fun=linear_reconstruction
-
-
-# In[ ]:
-
-
-from selfregulation.utils.r_to_py_utils import psychFA
-from sklearn.neighbors import KNeighborsRegressor
-
-def reorder_FA(ref_FA, new_FA):
-    """ Reorder FA to correspond to old FA, and check that there is such a correspondence"""
-    c = len(ref_FA.columns)
-    corr = pd.concat([ref_FA, new_FA], axis=1, sort=False).corr().iloc[c:, :c]
-    new_FA = new_FA.loc[:,corr.idxmax()]
-    new_FA.columns = ref_FA.columns
-    # if the correlation is low, the factors are completely off
-    if corr.max().min() < .9:
-        return None
-    else:
-        return new_FA
-
-def run_kNeighbors(distances, loadings, test_vars, 
-                   weightings=('uniform',), k_list=(3)):
-    """
-    Run Knearest neighbor using precomputed distances to create an ontological mapping
-    
-    Args:
-        distances: square distance matrix to pass to KNeighborsRegressors
-        loadings: loading matrix for training
-        test_vars: variable to reconstruct
-        weightings: (optional) list of weightings to pass to KNeighbors
-        k_list: list of k values to pass to KNeighbors as n_neighbors
-    """
-    train_distances = distances.loc[loadings.index, loadings.index]
-    test_distances = distances.loc[test_vars, loadings.index]
-    to_return = pd.DataFrame()
-    for weighting in weightings:
-        for k in k_list:
-            clf = KNeighborsRegressor(metric='precomputed', n_neighbors=k, weights=weighting)
-            clf.fit(train_distances, loadings)
-            out = clf.predict(test_distances)
-            out = pd.DataFrame(out, columns=loadings.columns)
-            out['var'] = test_vars
-            out['k'] = k
-            out['weighting'] = weighting
-            # add neighbors and distances
-            neighbors = clf.kneighbors(test_distances)
-            out['distances'] = tuple(neighbors[0])
-            out['neighbors'] = tuple(test_distances.columns[neighbors[1]])
-            to_return = pd.concat([to_return, out], sort=False)
-    return to_return
-    
-    
-def run_EFA(data, c, rotation, orig_loading):
-    fa, out = psychFA(data, c, rotate=EFA_rotation)
-    loadings = pd.DataFrame(out['loadings'], index=data.columns)
-    loadings = reorder_FA(orig_loadings, loadings)
-    return loadings
-
-def get_closest(data, target, n_tasks=5, metric='correlation'):
-    index = data.columns.get_loc(target)
-    distances = squareform(pdist(data.T, metric=metric))
-    sort_vars = data.columns[np.argsort(distances[index])]
-    # get closest tasks until tasks are filled up
-    tasks = set()
-    for var in sort_vars:
-        task, *_ = var.split('.')
-        tasks.add(task)
-        if len(tasks) == n_tasks:
-            break
-    # get variables from tasks
-    neighbors = data.filter(regex='|'.join(tasks)).columns
-    return neighbors
-
-
-# In[ ]:
-
-
-full_data = results.data
-c = results.EFA.get_c()
-orig_loadings = results.EFA.get_loading(c, rotate=EFA_rotation)
-
-full_reconstruction = pd.DataFrame()
-regex_list = ['^'+m for m in measure_list]
-
-for n_available_tasks in range(1,11):
-    for drop_regex in regex_list:
-        # refit an EFA model without variable    
-        drop_vars = list(full_data.filter(regex=drop_regex).columns)
-        subset = full_data.drop(drop_vars, axis=1)
-        full_loadings = run_EFA(subset, c, EFA_rotation, orig_loadings)
-        if full_loadings is None:
-            continue
-        for var in drop_vars:
-            # imagine we have a good estimate of one measure tomap is related to
-            target = full_data.corr()[var].drop(drop_vars).idxmax()
-            # get a neighborhood around that target
-            available_vars = get_closest(full_loadings.T, target, n_tasks=n_available_tasks,
-                                        metric='correlation')
-
-            # get dataset and loadings
-            data = full_data.loc[:, set(available_vars) | set(drop_vars)]
-            loadings = full_loadings.loc[available_vars,:]
-
-            distances = pd.DataFrame(squareform(pdist(data.T, metric='correlation')), 
-                                     index=data.columns, 
-                                     columns=data.columns).drop(drop_vars, axis=1)
-            # 
-            weightings = ['distance']
-            var_reconstruction = run_kNeighbors(distances, loadings, [var], weightings, 
-                                                [min(loadings.shape[0], 13)])
-            var_reconstruction['label'] = "closest_reconstruction"
-            var_reconstruction['n_tasks'] = n_available_tasks
-            full_reconstruction = pd.concat([full_reconstruction, var_reconstruction])
-full_reconstruction = full_reconstruction.sort_values(by='var')
-full_reconstruction.reset_index(drop=True, inplace=True)
-
-
-# In[ ]:
-
-
-# get reconstruction scores
-loadings = results.EFA.get_loading(c=c)
-loadings
-scores = []
-for i, row in full_reconstruction.iterrows():
-    var = row['var']
-    onto_embedding = loadings.loc[var]
-    estimated_embedding = row[onto_embedding.index]
-    score = np.corrcoef(list(estimated_embedding), 
-                          list(onto_embedding))[0,1]
-    scores.append(score)
-full_reconstruction.loc[:, 'score'] = scores
-
-
-# In[ ]:
-
-
-tmp = []
-for i,group in full_reconstruction.groupby(['n_tasks']):
-    group = group.loc[:,['var','score']].set_index('var')
-    group.columns = [i]
-    tmp.append(group)
-approach_compare = pd.concat(tmp, axis=1)
-approach_compare.columns = [i+': '+str(int(j)) for i,j in approach_compare.columns]
+plot_reconstruction_2D(reconstructions['KNNR'], n_reps=30, n_colored=6, use_background=True, seed=100)
 
 
 # ## Visualization of Reduced Reconstruction
@@ -677,71 +560,42 @@ approach_compare.columns = [i+': '+str(int(j)) for i,j in approach_compare.colum
 # In[ ]:
 
 
-f = plt.figure(figsize=(12,8))
-plot_df = approach_compare.melt(var_name='# Tasks', value_name='Reconstruction Score')
-sns.boxplot(x='# Tasks', y='Reconstruction Score', data=plot_df, palette='Reds')
-plt.legend(loc='best')
+sns.set_context('notebook')
+sns.set_style('white')
+size=12
+f, axes = plt.subplots(1,2, figsize=(size*2, size*.75))
+
+# random subset
+KNNRpartial_var_summary.pop_size = KNNRpartial_var_summary.pop_size.astype(int)
+KNNRpartial_var_summary.num_available_measures = KNNRpartial_var_summary.num_available_measures.astype(int)
+
+sns.pointplot(x='num_available_measures', y='corr_score', hue='pop_size', data=KNNRpartial_var_summary, 
+             palette=colors, ax=axes[0], ci=None, scale=1.4)
+leg = axes[0].legend(loc='best', frameon=False, handlelength=0, handletextpad=0,
+                     fontsize=size*1.5)
+beautify_legend(leg, colors=colors)
+leg.get_title().set_fontsize(size*1.5)
+
+axes[0].set_ylabel('Reconstruction Score', fontsize=size*3)
+axes[0].set_xlabel('# of Measures', fontsize=size*2)
+axes[0].set_title('KNNR with Random Subset', fontsize=size*3)
+axes[0].tick_params(width=2, length=2, labelsize=size*1.8)
+
+# efficiency subset
+closest_files = glob(path.join(ontology_results_dir, 'KNNRclosest_correlation_summary.pkl'))
+closest_summary = pd.read_pickle(closest_files[0])
+sns.pointplot(x='num_available_measures', y='mean', hue='pop_size', data=plot_df, 
+             palette=colors, ci=None, ax=axes[1], scale=1.2)
+axes[1].get_legend().remove()
+axes[1].set_ylabel('', fontsize=size*2)
+axes[1].set_xlabel('# of Measures', fontsize=size*2)
+axes[1].set_title('KNNR with Efficient Subset', fontsize=size*3)
+axes[1].tick_params(width=2, length=2, labelsize=size*1.8)
+
+# set axes to he the same
+ylim = (np.min([ax.get_ylim()[0] for ax in axes]), np.max([ax.get_ylim()[1] for ax in axes]))
+axes[0].set_ylim(ylim)
+axes[1].set_ylim(ylim)
 if save:
-    save_figure(f, path.join(plot_dir, 'Fig7_reduced_reconstructions_box.png'), save_kws={'dpi': 300})
-
-
-# In[ ]:
-
-
-corr = approach_compare.corr(method='spearman')
-mean_success = approach_compare.mean().values
-plot_df = approach_compare
-size = 2
-f=sns.pairplot(plot_df.iloc[:,0:8], height=size,
-             plot_kws={'color': [.4,.4,.4],
-                       's': 40},
-             diag_kws={'bins': 20,
-                      'edgecolor': 'k',
-                      'linewidth': size/4})
-axes = f.axes
-# fix axes limits
-for i in range(len(f.axes)):
-    for j in range(len(f.axes)):
-        ax = axes[i][j]
-        ax.set_ylim([.15,1.1])
-        ax.tick_params(left=False, bottom=False,
-                      labelleft=False, labelbottom=False)
-        if i!=j:
-            ax.set_xlim([.15,1.1])
-            ax.plot(ax.get_xlim(), ax.get_ylim(), lw=size, ls="--", c=".3", zorder=-1)
-        if j<i:
-            x = .6; y = .3
-            if mean_success[j] > mean_success[i]:
-                x = .28; y = 1
-            ax.text(x, y, r'$\rho$ = %s' % format_num(corr.iloc[i,j]),
-                   fontsize=size*8)
-        # change sizing for upper triangle based on icc
-        if j>i: 
-            ax.set_visible(False)
-            #ax.collections[0].set_sizes(plot_df['icc']**2*100)
-            
-# color diagonal
-for i,ax in enumerate(f.diag_axes):
-    ax.set_title(axes[i][0].get_ylabel(), color=colors[i%4], fontsize=size*9)
-    for patch in ax.patches:
-        patch.set_facecolor(colors[i%4])
-        
-# color labels
-for i in range(len(f.axes)):
-    left_ax = axes[i][0]
-    bottom_ax = axes[-1][i]
-    left_ax.set_ylabel(left_ax.get_ylabel(), color=colors[i%4],labelpad=10, fontsize=size*9)
-    bottom_ax.set_xlabel('')
-    
-# set tick spacing
-ax = axes[-1][-2]
-ax.tick_params(length=1, width=1, labelleft=True, labelbottom=True)
-ax.set_xticks([.18, 1])
-ax.set_xticklabels(['0.2', '1.0'], fontsize=size*8, fontweight='bold')
-ax.set_yticks([1])
-ax.set_yticklabels(['1.0'], fontsize=size*8, fontweight='bold')
-# common X
-f.fig.text(0.5, 0.02, 'Average DV Reconstruction Score', ha='center', fontsize=size*10)
-if save:
-    save_figure(f, path.join(plot_dir, 'SFig2_reduced_reconstructions_mat.png'), save_kws={'dpi': 300})
+    save_figure(f, path.join(plot_dir, 'Fig4_partial_reconstructions.png'), save_kws={'dpi': 300})
 
