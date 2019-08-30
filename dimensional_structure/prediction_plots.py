@@ -433,10 +433,10 @@ def plot_outcome_ontological_similarity(results, EFA=True, classifier='ridge',
     cbar_ax = f.add_axes([.91, .05, .03, .8])
     sns.heatmap(corr, ax=ax1, square=True, vmax=1, vmin=0,
                 cbar_ax=cbar_ax, linewidth=2,
-                cmap=sns.diverging_palette(220,15,n=100,as_cmap=True))
+                cmap=sns.light_palette((15, 75, 50), input='husl', n_colors=100, as_cmap=True))
     sns.heatmap(corr, ax=ax1, square=True, vmax=1, vmin=0,
                 cbar_ax=cbar_ax, annot=True, annot_kws={"size": size/n*15},
-                cmap=sns.diverging_palette(220,15,n=100,as_cmap=True),
+                cmap=sns.light_palette((15, 75, 50), input='husl', n_colors=100, as_cmap=True),
                 mask=mask, linewidth=2)
     yticklabels = ax1.get_yticklabels()
     ax1.set_yticklabels(yticklabels, rotation=0, ha="right")
