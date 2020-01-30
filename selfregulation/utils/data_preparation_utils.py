@@ -589,6 +589,7 @@ def save_task_data(data_loc, data):
 def transform_remove_skew(data, threshold=1, 
                           positive_skewed=None,
                           negative_skewed=None,
+                          drop_failed=True,
                           verbose=True):
     data = data.copy()
     if positive_skewed is None:
@@ -605,7 +606,10 @@ def transform_remove_skew(data, threshold=1,
     positive_subset = np.log(positive_subset+shift)
     # remove outliers
     positive_tmp = remove_outliers(positive_subset)
-    successful_transforms = positive_subset.loc[:,abs(positive_tmp.skew())<threshold]
+    if drop_failed:
+        successful_transforms = positive_subset.loc[:,abs(positive_tmp.skew())<threshold]
+    else:
+        successful_transforms = positive_subset
     if verbose:
         print('*'*40)
         print('** Successfully transformed %s positively skewed variables:' % len(successful_transforms.columns))
@@ -624,7 +628,10 @@ def transform_remove_skew(data, threshold=1,
     # reflected log transform for negative skew
     negative_subset = np.log(negative_subset.max()+1-negative_subset)
     negative_tmp = remove_outliers(negative_subset)
-    successful_transforms = negative_subset.loc[:,abs(negative_tmp.skew())<threshold]
+    if drop_failed:
+        successful_transforms = negative_subset.loc[:,abs(negative_tmp.skew())<threshold]
+    else:
+        successful_transforms = negative_subset
     if verbose:
         print('*'*40)
         print('** Successfully transformed %s negatively skewed variables:' % len(successful_transforms.columns))
