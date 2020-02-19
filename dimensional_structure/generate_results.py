@@ -107,6 +107,7 @@ demographic_factor_names = ['Drug Use',
                                       
 subsets = [{'name': 'task', 
             'regex': 'task',
+            'dimensionality': None,
             'oblimin_cluster_names': ['Conflict Processing',
                                       'Information Processing',
                                       'Shifting',
@@ -133,6 +134,7 @@ subsets = [{'name': 'task',
             'predict': True},
             {'name': 'survey',
              'regex': 'survey',
+             'dimensionality': None,
              'oblimin_cluster_names': ['Financial Risk-Taking',
                                        'Eating',
                                        'Behavioral Approach',
@@ -156,11 +158,13 @@ subsets = [{'name': 'task',
              'predict': True},
              {'name': 'main_subset', 
             'regex': 'main',
+            'dimensionality': None,
             'oblimin_cluster_names': [],
             'oblimin_factor_names': [],
             'predict': False},
              {'name': 'all', 
               'regex': '.',
+              'dimensionality': None,
               'oblimin_cluster_names': [],
               'oblimin_factor_names': [],
               'predict': False}]
@@ -199,6 +203,10 @@ for subset in subsets:
             results.run_clustering_analysis(rotate=rotate, 
                                             verbose=verbose, 
                                             run_graphs=False)
+            # if dimensionality is specified, use it instead of the calculated
+            # optimal dimensionality
+            if subset['dimensionality'] is not None:
+                results.EFA.results['num_factors'] = subset['dimensionality']
             c = results.EFA.get_c()
             # name factors and clusters
             factor_names = subset.get('%s_factor_names' % rotate, None)
