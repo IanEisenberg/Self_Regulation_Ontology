@@ -5,6 +5,7 @@ import argparse
 # parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('-dataset', default=None)
+parser.add_argument('-config', default='NatureComm_config.json')
 parser.add_argument('-no_analysis', action='store_false')
 parser.add_argument('-no_prediction', action='store_false')
 parser.add_argument('-no_plot', action='store_false')
@@ -49,6 +50,7 @@ from os import makedirs, path, remove
 import pickle
 import random
 from shutil import copyfile, copytree, rmtree
+import simplejson
 import subprocess
 import time
 
@@ -104,70 +106,9 @@ demographic_factor_names = ['Drug Use',
                             'Income / Life Milestones']
 
 
-                                      
-subsets = [{'name': 'task', 
-            'regex': 'task',
-            'dimensionality': None,
-            'oblimin_cluster_names': ['Conflict Processing',
-                                      'Information Processing',
-                                      'Shifting',
-                                      'Speeded Information Processing',
-                                      'Inhibition-Related Threshold',
-                                      'Caution',
-                                      'Perc/Resp',
-                                      'Inhibition-Related Perc/Resp',
-                                      'NA1',
-                                      'Discounting',
-                                      'NA2',
-                                      'Cold/Model-Based',
-                                      'Hot/Model-Free',
-                                      'NA3',
-                                      'NA4'],
-            'oblimin_factor_names': ['Speeded IP', 'Strategic IP', 
-                                     'Perc / Resp','Caution', 
-                                     'Discounting']
-                                     ,
-            'varimax_cluster_names': None,
-            'varimax_factor_names': ['Speeded IP', 'Strategic IP', 
-                                     'Perc / Resp',  'Caution', 
-                                     'Discounting'],
-            'predict': True},
-            {'name': 'survey',
-             'regex': 'survey',
-             'dimensionality': None,
-             'oblimin_cluster_names': ['Financial Risk-Taking',
-                                       'Eating',
-                                       'Behavioral Approach',
-                                       'Behavioral Inhibition',
-                                       'Mindfulness',
-                                       'Impulsivity',
-                                       'Goal-Direcedness',
-                                       'Ethical/Health Risk-Taking',
-                                       'Risk Perception',
-                                       'Sensation Seeking',
-                                       'Sociability',
-                                       'Reward Sensitivity'],
-             'oblimin_factor_names':  ['Sensation Seeking', 'Emotional Control',  
-                                   'Mindfulness', 'Impulsivity',
-                                   'Reward Sensitivity', 'Goal-Directedness', 
-                                   'Risk Perception', 'Eating Control', 
-                                   'Ethical Risk-Taking', 'Social Risk-Taking',
-                                   'Financial Risk-Taking', 'Agreeableness'],
-            'varimax_cluster_names': None,
-            'varimax_factor_names': None,
-             'predict': True},
-             {'name': 'main_subset', 
-            'regex': 'main',
-            'dimensionality': None,
-            'oblimin_cluster_names': [],
-            'oblimin_factor_names': [],
-            'predict': False},
-             {'name': 'all', 
-              'regex': '.',
-              'dimensionality': None,
-              'oblimin_cluster_names': [],
-              'oblimin_factor_names': [],
-              'predict': False}]
+config_file = path.join(basedir, 'dimensional_structure', args.config)
+subsets = simplejson.load(open(config_file,'r'))                             
+
 results = None
 all_results = None
 ID = str(random.getrandbits(16)) 
