@@ -69,5 +69,9 @@ to build run:
 
 Mount the Data and Results directory from the host into the container at /SRO/Data and /SRO/Results respectively
 
+## License
+
+The data in this repository are made available under the [Creative Commons Attribution 4.0 International (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license. You are free to share and adapt the data for any purpose, provided you give appropriate credit.
+
 To start bash in the docker container with the appropriate mounts run:
 `docker run --entrypoint /bin/bash -v /home/ian/Experiments/expfactory/Self_Regulation_Ontology/Data:/SRO/Data -it sro`
