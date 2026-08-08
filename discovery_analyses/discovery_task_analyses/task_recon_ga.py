@@ -32,16 +32,17 @@ print('using %d cores'%num_cores)
 
 
 # this is kludgey but it works
-sys.path.append('../utils')
+sys.path.append('../../selfregulation/utils')
 from utils import get_info,get_behav_data
 
 dataset=get_info('dataset')
 print('using dataset:',dataset)
 basedir=get_info('base_directory')
 derived_dir=os.path.join(basedir,'Data/Derived_Data/%s'%dataset)
+data_dir=os.path.join(basedir,'Data/%s'%dataset)
 
 
-data=pandas.read_csv(os.path.join(derived_dir,'taskdata_clean_cutoff3.00IQR_imputed.csv'))
+data=pandas.read_csv(os.path.join(data_dir,'taskdata_imputed.csv'), index_col=0)
 
 cdata=scale(data.values)
 nsubs=data.shape[0]
@@ -141,7 +142,7 @@ def immigrate(pop,allcombs,n):
     return pop+immigrants
 
 def mutate(pop,mutation_rate):
-    mutants=numpy.random.randint(len(pop),size=numpy.round(mutation_rate*len(pop)))
+    mutants=numpy.random.randint(len(pop),size=numpy.round(mutation_rate*len(pop)).astype(int))
     for m in mutants:
         alts=[i for i in range(len(tasks)) if not i in pop[m]]
         numpy.random.shuffle(alts)
